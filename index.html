@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Backend Forge — From API Builders to AI-Native Systems Architects</title>
+    <meta name="description" content="Master high-concurrency systems, race condition locks, PostgreSQL transaction isolation, and distributed fault tolerance. Interactive labs with AI mentor for backend engineers." />
+    <meta name="keywords" content="backend engineering, systems architecture, high concurrency, PostgreSQL, distributed systems, AI-native, interactive labs, TypeScript, Go, Rust, Redis" />
+    <meta name="author" content="Backend Forge" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Backend Forge — From API Builders to AI-Native Systems Architects" />
+    <meta property="og:description" content="Master high-concurrency systems with interactive labs, AI mentor, and verified certificates." />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:url" content="https://backendforge.dev" />
+    <meta property="og:site_name" content="Backend Forge" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Backend Forge — From API Builders to AI-Native Systems Architects" />
+    <meta name="twitter:description" content="Master high-concurrency systems with interactive labs, AI mentor, and verified certificates." />
+    <meta name="twitter:image" content="/og-image.png" />
+
+    <!-- Theme Color for Mobile Browsers -->
+    <meta name="theme-color" content="#09090b" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300..800;1,300..800&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Backend Forge",
+      "description": "Master high-concurrency systems, race condition locks, PostgreSQL transaction isolation, and distributed fault tolerance. Interactive labs with AI mentor for backend engineers.",
+      "url": "https://backendforge.dev",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "199",
+        "priceCurrency": "USD",
+        "priceValidUntil": "2026-12-31",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "2847"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Backend Forge",
+        "url": "https://backendforge.dev"
+      }
+    }
+    </script>
+
+    <style>
+      /* Prevent FOUC */
+      html { background: #09090b; }
+      #root:empty::before {
+        content: '';
+        display: block;
+        width: 32px; height: 32px;
+        margin: calc(50vh - 16px) auto;
+        border: 3px solid rgba(239,68,68,.2);
+        border-top-color: #ef4444;
+        border-radius: 50%;
+        animation: spin .6s linear infinite;
+      }
+      @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+  </head>
+  <body class="bg-zinc-950 text-zinc-100 font-sans antialiased selection:bg-red-500/30 selection:text-red-200">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

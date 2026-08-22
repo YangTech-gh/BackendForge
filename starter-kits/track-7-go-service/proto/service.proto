@@ -1,0 +1,12 @@
+﻿syntax = "proto3";
+package backendforge;
+
+service HealthService {
+  rpc Health (HealthRequest) returns (HealthResponse);
+}
+
+message HealthRequest {}
+message HealthResponse {
+  string status = 1;
+  string version = 2;
+}
