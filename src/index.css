@@ -447,6 +447,11 @@
   box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.5);
   transform: translateY(-2px);
 }
+.article-card:focus-visible {
+  outline: 2px solid #818cf8;
+  outline-offset: 3px;
+  border-color: rgba(129, 140, 248, 0.7);
+}
 
 /* === PRINT STYLES === */
 @media print {

@@ -1,4 +1,4 @@
-﻿-- Backend Forge Seed Data - User Progress (Demo User)
+-- Backend Forge Seed Data: User Progress (Demo User)
 -- Sample progress for a demo user in Track 2 (Node.js)
 -- Run: psql -f supabase/seed-user-data.sql
 --

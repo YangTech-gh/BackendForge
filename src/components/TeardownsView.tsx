@@ -85,7 +85,7 @@ export const TeardownsView: React.FC<TeardownsViewProps> = ({ teardowns, selecte
     headline: activeTeardown.title,
     description: activeTeardown.seoDescription || activeTeardown.summary,
     author: {
-      "@type": "Organization",
+      "@type": "Person",
       name: activeTeardown.author || 'Backend Forge Team',
     },
     publisher: {
@@ -94,6 +94,8 @@ export const TeardownsView: React.FC<TeardownsViewProps> = ({ teardowns, selecte
       url: SITE_URL,
     },
     datePublished: activeTeardown.publishedAt,
+    dateModified: activeTeardown.publishedAt,
+    image: `${SITE_URL}/og-image.png`,
     keywords: activeTeardown.keywords?.join(', ') || activeTeardown.tags.join(', '),
     mainEntityOfPage: {
       "@type": "WebPage",

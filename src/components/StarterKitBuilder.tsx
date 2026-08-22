@@ -47,7 +47,7 @@ export const StarterKitBuilder: React.FC<StarterKitBuilderProps> = ({ kits }) =>
         </header>
         <div className="flex flex-col items-center justify-center py-16 text-center">
           <div className="w-16 h-16 rounded-full bg-zinc-800 flex items-center justify-center mb-4">
-            <Download className="w-8 h-8 text-zinc-500" />
+            <Download className="w-8 h-8 text-zinc-500" aria-hidden="true" />
           </div>
           <h3 className="text-lg font-semibold text-zinc-300 mb-2">No starter kits available yet</h3>
           <p className="text-zinc-500 text-sm max-w-md">New production starter kits are being added soon.</p>
@@ -65,7 +65,7 @@ export const StarterKitBuilder: React.FC<StarterKitBuilderProps> = ({ kits }) =>
   };
 
   const handleDownloadZip = () => {
-    window.open(selectedKit.githubRepoUrl, '_blank', 'noreferrer');
+    window.open(selectedKit.githubRepoUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -136,7 +136,7 @@ export const StarterKitBuilder: React.FC<StarterKitBuilderProps> = ({ kits }) =>
         <div className="lg:col-span-5 space-y-6 relative z-10">
           <div className="space-y-2">
             <span className="text-xs font-mono text-red-400 uppercase font-bold flex items-center space-x-1">
-              <Zap className="w-3.5 h-3.5 fill-red-400" />
+              <Zap className="w-3.5 h-3.5 fill-red-400" aria-hidden="true" />
               <span>ACTIVE BOILERPLATE CONFIG</span>
             </span>
             <h2 className="text-2xl font-bold text-white">{selectedKit.name}</h2>
@@ -172,17 +172,18 @@ export const StarterKitBuilder: React.FC<StarterKitBuilderProps> = ({ kits }) =>
               onClick={handleDownloadZip}
               className="flex items-center space-x-2 bg-gradient-to-r from-red-600 via-rose-600 to-indigo-600 hover:from-red-500 hover:to-indigo-500 text-white font-bold px-5 py-3 rounded-xl text-xs transition shadow-xl shadow-red-950/50 font-mono border border-red-500/30"
             >
-              <Download className="w-4 h-4 fill-white" />
+              <Download className="w-4 h-4 fill-white" aria-hidden="true" />
               <span>Download Starter Kit (.zip)</span>
             </button>
 
             <a
               href={selectedKit.githubRepoUrl}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
+              aria-label="View GitHub repository (opens in new tab)"
               className="flex items-center space-x-2 bg-zinc-950 hover:bg-zinc-800 text-zinc-200 border border-zinc-800 font-semibold px-4 py-3 rounded-xl text-xs transition font-mono"
             >
-              <Github className="w-4 h-4" />
+              <Github className="w-4 h-4" aria-hidden="true" />
               <span>View GitHub Repo</span>
             </a>
           </div>
@@ -193,7 +194,7 @@ export const StarterKitBuilder: React.FC<StarterKitBuilderProps> = ({ kits }) =>
           
           <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
             <div className="flex items-center space-x-2">
-              <Terminal className="w-4 h-4 text-emerald-400" />
+              <Terminal className="w-4 h-4 text-emerald-400" aria-hidden="true" />
               <span className="font-bold text-zinc-200">Terminal Setup Commands</span>
             </div>
 
@@ -201,7 +202,7 @@ export const StarterKitBuilder: React.FC<StarterKitBuilderProps> = ({ kits }) =>
               onClick={handleCopyCommand}
               className="flex items-center space-x-1.5 text-zinc-400 hover:text-red-400 transition text-[11px]"
             >
-              {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+              {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" aria-hidden="true" /> : <Copy className="w-3.5 h-3.5" aria-hidden="true" />}
               <span>{copied ? 'Copied to Clipboard!' : 'Copy Commands'}</span>
             </button>
           </div>

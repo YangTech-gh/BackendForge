@@ -1,4 +1,4 @@
-﻿-- Backend Forge Seed Data - Workshops
+-- Backend Forge Seed Data: Workshops
 -- 6 workshops covering core backend topics
 -- Run: supabase db reset (auto) or psql -f supabase/seed-workshops.sql
 

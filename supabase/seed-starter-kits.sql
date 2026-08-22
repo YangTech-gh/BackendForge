@@ -1,4 +1,4 @@
-﻿-- Backend Forge Seed Data - Starter Kits
+-- Backend Forge Seed Data: Starter Kits
 -- Starter code templates for each track
 -- Run: supabase db reset (auto) or psql -f supabase/seed-starter-kits.sql
 

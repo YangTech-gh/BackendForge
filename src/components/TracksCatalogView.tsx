@@ -377,7 +377,7 @@ export const TracksCatalogView: React.FC<TracksCatalogViewProps> = ({
         {filteredTracks.length === 0 && (
           <div className="flex flex-col items-center justify-center py-16 text-center">
             <div className="w-16 h-16 rounded-full bg-zinc-800 flex items-center justify-center mb-4">
-              <Search className="w-8 h-8 text-zinc-500" />
+              <Search className="w-8 h-8 text-zinc-500" aria-hidden="true" />
             </div>
             <h3 className="text-lg font-semibold text-zinc-300 mb-2">
               {selectedParadigm === 'All' ? 'No tracks available yet' : 'No tracks match your filter'}
