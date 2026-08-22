@@ -46,14 +46,6 @@ function CornerOrnaments() {
   );
 }
 
-function AnimatedSectionDivider() {
-  return (
-    <div className="h-px w-full bg-gradient-to-r from-transparent via-zinc-700 to-transparent relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-red-500/40 to-transparent" style={{ animation: 'shimmer 3s linear infinite', backgroundSize: '200% auto' }} />
-    </div>
-  );
-}
-
 function CircuitDecorations() {
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
@@ -106,6 +98,14 @@ function RotatingRings() {
       <div className="absolute top-1/4 right-0 w-48 h-48 border border-red-500/10 rounded-full geo-rotate-slow opacity-40" />
       <div className="absolute bottom-1/4 left-0 w-32 h-32 border border-indigo-500/10 rounded-full geo-rotate-reverse opacity-40" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 border border-purple-500/5 rounded-full geo-rotate-slow opacity-30" style={{ animationDuration: '35s' }} />
+    </div>
+  );
+}
+
+function AnimatedSectionDivider() {
+  return (
+    <div className="h-px w-full bg-gradient-to-r from-transparent via-zinc-700 to-transparent relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-red-500/40 to-transparent" style={{ animation: 'shimmer 3s linear infinite', backgroundSize: '200% auto' }} />
     </div>
   );
 }
@@ -207,6 +207,11 @@ export function LandingPage({ onStart, onOpenUpgradeModal }: LandingPageProps) {
           <div className="absolute left-12 top-28 w-px h-12 data-stream-line opacity-20" style={{ animationDelay: '1s' }} />
           <div className="absolute right-16 bottom-24 w-px h-16 data-stream-line opacity-20" style={{ animationDelay: '2s' }} />
 
+          {/* Terminal typing decoration */}
+          <div className="absolute bottom-24 right-8 text-[10px] font-mono text-zinc-600 hidden lg:block terminal-cursor">
+            $ forge init --track=node-ts
+          </div>
+
           <div className="space-y-6 relative z-10 max-w-2xl">
             <div className="flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/25 text-red-400 px-3 py-1 rounded-full text-xs font-bold font-mono">
@@ -224,7 +229,7 @@ export function LandingPage({ onStart, onOpenUpgradeModal }: LandingPageProps) {
 
             <h1 className="text-3xl sm:text-5xl font-black leading-[1.1] tracking-tight text-white">
               From API Builder to <br />
-              <span className="shimmer-text">
+              <span className="shimmer-text glitch-hover">
                 Systems Architect
               </span>
             </h1>
@@ -238,11 +243,13 @@ export function LandingPage({ onStart, onOpenUpgradeModal }: LandingPageProps) {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => onStart()}
-                className="flex items-center space-x-2 bg-gradient-to-r from-red-600 via-rose-600 to-indigo-600 hover:from-red-500 hover:to-indigo-500 text-white font-bold px-6 py-3.5 rounded-2xl transition text-sm shadow-xl shadow-red-950/40 border border-red-500/30 btn-shimmer"
+                className="flex items-center space-x-2 bg-gradient-to-r from-red-600 via-rose-600 to-indigo-600 hover:from-red-500 hover:to-indigo-500 text-white font-bold px-6 py-3.5 rounded-2xl transition text-sm shadow-xl shadow-red-950/40 border border-red-500/30 btn-shimmer relative overflow-hidden"
                 style={{ backgroundSize: '200% auto' }}
               >
-                <span>Start Learning Free</span>
-                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                <span className="relative z-10 flex items-center space-x-2">
+                  <span>Start Learning Free</span>
+                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                </span>
               </motion.button>
 
               <motion.button
@@ -267,22 +274,27 @@ export function LandingPage({ onStart, onOpenUpgradeModal }: LandingPageProps) {
             </div>
           </div>
 
-          {/* Hero Stats */}
-          <div className="pt-8 mt-6 border-t border-zinc-800/80 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-mono text-zinc-400 relative z-10">
-            {[
-              { value: `${COURSE_TRACKS.length}`, label: 'Full Tracks', sub: 'Node, Rails, Go, Rust, AI', accent: false },
-              { value: 'Sub-5ms', label: 'Latency', sub: 'Production Chaos Hardened', accent: true, icon: ShieldAlert },
-              { value: PRICING.PRO_LIFETIME_PRICE_DISPLAY, label: 'Lifetime', sub: 'No Monthly Subscriptions', accent: false },
-              { value: 'Verified', label: 'Diploma', sub: 'Shareable Credential ID', accent: true, icon: ShieldCheck },
-            ].map((stat, i) => (
-              <div key={i} className="space-y-0.5 group/stat">
-                <div className={`text-base font-bold font-sans flex items-center space-x-1 ${stat.accent ? 'text-red-400' : 'text-white'}`}>
-                  {stat.icon && <stat.icon className="w-3.5 h-3.5" aria-hidden="true" />}
-                  <span>{stat.value}</span>
+          {/* Hero Stats with animated status bar */}
+          <div className="pt-8 mt-6 relative z-10">
+            <div className="h-px w-full bg-gradient-to-r from-transparent via-zinc-700 to-transparent mb-4 relative overflow-hidden">
+              <div className="absolute inset-0 status-bar-animated opacity-60" />
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-mono text-zinc-400">
+              {[
+                { value: `${COURSE_TRACKS.length}`, label: 'Full Tracks', sub: 'Node, Rails, Go, Rust, AI', accent: false },
+                { value: 'Sub-5ms', label: 'Latency', sub: 'Production Chaos Hardened', accent: true, icon: ShieldAlert },
+                { value: PRICING.PRO_LIFETIME_PRICE_DISPLAY, label: 'Lifetime', sub: 'No Monthly Subscriptions', accent: false },
+                { value: 'Verified', label: 'Diploma', sub: 'Shareable Credential ID', accent: true, icon: ShieldCheck },
+              ].map((stat, i) => (
+                <div key={i} className="space-y-0.5 group/stat">
+                  <div className={`text-base font-bold font-sans flex items-center space-x-1 ${stat.accent ? 'text-red-400' : 'text-white'}`}>
+                    {stat.icon && <stat.icon className="w-3.5 h-3.5" aria-hidden="true" />}
+                    <span>{stat.value}</span>
+                  </div>
+                  <div className="text-zinc-500 text-[11px] group-hover/stat:text-zinc-400 transition-colors">{stat.sub}</div>
                 </div>
-                <div className="text-zinc-500 text-[11px] group-hover/stat:text-zinc-400 transition-colors">{stat.sub}</div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </motion.section>
 
@@ -309,6 +321,16 @@ export function LandingPage({ onStart, onOpenUpgradeModal }: LandingPageProps) {
 
           {/* Animated ring ornament */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 border border-red-500/10 rounded-full animate-spin" style={{ animationDuration: '30s' }} />
+
+          {/* Pulsing status nodes */}
+          <div className="absolute top-8 left-8 flex items-center gap-1.5">
+            <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full pulse-dot" />
+            <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-wider">Live</span>
+          </div>
+          <div className="absolute bottom-8 right-8 flex items-center gap-1.5">
+            <div className="w-1.5 h-1.5 bg-red-400 rounded-full pulse-dot" style={{ animationDelay: '0.5s' }} />
+            <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-wider">Active</span>
+          </div>
 
           <div className="relative z-10">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-500/20 text-red-200 border border-red-400/40 text-[10px] font-mono font-bold uppercase tracking-wider mb-4 shadow-sm">
@@ -467,6 +489,8 @@ export function LandingPage({ onStart, onOpenUpgradeModal }: LandingPageProps) {
           </button>
         </div>
 
+        <AnimatedSectionDivider />
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {COURSE_TRACKS.slice(0, 6).map((track, idx) => (
             <motion.div
@@ -535,6 +559,8 @@ export function LandingPage({ onStart, onOpenUpgradeModal }: LandingPageProps) {
             <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" aria-hidden="true" />
           </button>
         </div>
+
+        <AnimatedSectionDivider />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10">
           {ARCHITECTURE_TEARDOWNS.slice(0, 3).map((item, idx) => (

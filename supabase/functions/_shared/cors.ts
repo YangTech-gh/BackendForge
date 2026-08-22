@@ -3,9 +3,19 @@
 // Import this in every Edge Function for consistent CORS handling
 // ============================================================================
 
-// FIX #10: Support comma-separated APP_URL list for www/apex dual-domain
 const appUrlEnv = Deno.env.get("APP_URL") || "http://localhost:3000";
+
+function extractOrigins(url: string): string[] {
+  try {
+    const parsed = new URL(url);
+    return [`${parsed.protocol}//${parsed.host}`];
+  } catch {
+    return [];
+  }
+}
+
 const ALLOWED_ORIGINS = [
+  ...appUrlEnv.split(",").map((s) => s.trim()).filter(Boolean).flatMap(extractOrigins),
   ...appUrlEnv.split(",").map((s) => s.trim()).filter(Boolean),
   "http://localhost:3000",
   "http://localhost:5173",
