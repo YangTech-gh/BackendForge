@@ -14,10 +14,10 @@ import {
 
 // SEC 5: Validate env vars at startup
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
-const SUPABASE_PUBLISHABLE_KEY = Deno.env.get("SUPABASE_PUBLISHABLE_KEY");
+const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY");
 
-if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
-  console.error("FATAL: Missing required environment variables. Check SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY");
+if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  console.error("FATAL: Missing required environment variables. Check SUPABASE_URL, SUPABASE_ANON_KEY");
   throw new Error("Missing required environment variables");
 }
 
@@ -37,7 +37,7 @@ Deno.serve(async (req: Request) => {
       return errorResponse("Missing authorization", 401, req);
     }
 
-    const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
       global: { headers: { Authorization: authHeader } },
     });
 

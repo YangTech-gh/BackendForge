@@ -44,20 +44,25 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   const totalLessons = courses.reduce((sum, track) => sum + track.labs.reduce((s, lab) => s + (lab.lessons?.length || 0), 0), 0);
   const totalExercises = courses.reduce((sum, track) => sum + track.labs.reduce((s, lab) => s + (lab.exercises?.length || 0), 0), 0);
 
-  // XP Milestones
-  const XP_MILESTONES = [
-    { xp: 100, label: 'First Steps', icon: Target, color: 'text-zinc-400' },
-    { xp: 500, label: 'Code Warrior', icon: Flame, color: 'text-amber-400' },
-    { xp: 1000, label: 'System Builder', icon: Award, color: 'text-emerald-400' },
-    { xp: 2500, label: 'Architecture Ace', icon: Trophy, color: 'text-purple-400' },
-    { xp: 5000, label: 'Backend Legend', icon: Sparkles, color: 'text-red-400' },
-  ];
+      {/* XP Milestones */}
+      const XP_MILESTONES = [
+        { xp: 100, label: 'First Steps', icon: Target, color: 'text-zinc-400' },
+        { xp: 500, label: 'Code Warrior', icon: Flame, color: 'text-amber-400' },
+        { xp: 1000, label: 'System Builder', icon: Award, color: 'text-emerald-400' },
+        { xp: 2500, label: 'Architecture Ace', icon: Trophy, color: 'text-purple-400' },
+        { xp: 5000, label: 'Backend Legend', icon: Sparkles, color: 'text-red-400' },
+      ];
 
-  const currentMilestone = XP_MILESTONES.filter(m => userState.xpPoints >= m.xp).pop();
-  const nextMilestone = XP_MILESTONES.find(m => userState.xpPoints < m.xp);
-  const xpProgress = nextMilestone
-    ? ((userState.xpPoints - (currentMilestone?.xp || 0)) / (nextMilestone.xp - (currentMilestone?.xp || 0))) * 100
-    : 100;
+      const earnedMilestones = XP_MILESTONES.filter(m => userState.xpPoints >= m.xp);
+      const currentMilestone = earnedMilestones[earnedMilestones.length - 1];
+      const nextMilestone = XP_MILESTONES.find(m => userState.xpPoints < m.xp);
+      const isAllComplete = !nextMilestone;
+      const xpProgress = nextMilestone
+        ? ((userState.xpPoints - (currentMilestone?.xp || 0)) / (nextMilestone.xp - (currentMilestone?.xp || 0))) * 100
+        : 100;
+
+      const xpBadge = (xp: number) =>
+        xp >= 1000 ? `${xp / 1000}k` : xp.toString();
   return (
     <div className="space-y-8 pb-16" role="main" aria-label="Dashboard">
       {/* Hidden SEO content block */}
@@ -368,7 +373,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </motion.div>
 
         {/* XP Milestones & Badge Progression */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.25, ease: 'easeOut' }}
@@ -376,19 +381,20 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           role="region"
           aria-label="XP milestones and badges"
         >
+          {/* Header */}
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
                 <Trophy className="w-5 h-5 text-amber-400" />
               </div>
               <div>
-                <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider font-mono block">
+                <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest font-mono block">
                   XP MILESTONES
                 </span>
                 <h3 className="text-base font-bold text-white">{userState.xpPoints.toLocaleString()} XP Earned</h3>
               </div>
             </div>
-            {currentMilestone && (
+            {currentMilestone && !isAllComplete && (
               <span className={`text-[10px] font-mono px-2.5 py-1 rounded-full bg-zinc-800 ${currentMilestone.color} border border-zinc-700 font-bold flex items-center space-x-1`}>
                 <currentMilestone.icon className="w-3 h-3" aria-hidden="true" />
                 <span>{currentMilestone.label}</span>
@@ -396,10 +402,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             )}
           </div>
 
-          {/* XP Progress to Next Milestone */}
+          {/* Next Milestone Progress */}
           {nextMilestone && (
-            <div className="mb-4 space-y-2">
-              <div className="flex justify-between text-xs font-mono text-zinc-400">
+            <div className="mb-5 space-y-2">
+              <div className="flex justify-between text-[11px] font-mono text-zinc-400">
                 <span>Next: {nextMilestone.label}</span>
                 <span className="text-amber-400 font-bold">{userState.xpPoints} / {nextMilestone.xp} XP</span>
               </div>
@@ -413,25 +419,50 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           )}
 
           {/* Badge Timeline */}
-          <div className="flex items-center justify-between pt-2">
-            {XP_MILESTONES.map((milestone, idx) => {
-              const isEarned = userState.xpPoints >= milestone.xp;
-              const Icon = milestone.icon;
-              return (
-                <div key={idx} className="flex flex-col items-center space-y-1">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center transition ${
-                    isEarned
-                      ? 'bg-amber-500/20 border border-amber-500/40 text-amber-400'
-                      : 'bg-zinc-800 border border-zinc-700 text-zinc-600'
-                  }`}>
-                    <Icon className="w-4 h-4" aria-hidden="true" />
+          <div className="relative">
+            {/* Horizontal progress track */}
+            <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-zinc-800 -translate-y-1/2" aria-hidden="true" />
+            <div
+              className="absolute top-1/2 left-0 h-0.5 bg-gradient-to-r from-amber-500 to-orange-500 -translate-y-1/2 transition-all duration-500"
+              style={{ width: `${(earnedMilestones.length / (XP_MILESTONES.length - 1)) * 100}%` }}
+              aria-hidden="true"
+            />
+
+            <div className="relative flex items-center justify-between">
+              {XP_MILESTONES.map((milestone, idx) => {
+                const isEarned = userState.xpPoints >= milestone.xp;
+                const isLastEarned = currentMilestone?.xp === milestone.xp;
+                const isNext = nextMilestone?.xp === milestone.xp;
+                const Icon = milestone.icon;
+
+                return (
+                  <div key={idx} className="flex flex-col items-center space-y-1.5 z-10">
+                    <div className="relative">
+                      {isLastEarned && (
+                        <div className="absolute -inset-1.5 rounded-full bg-amber-500/20 animate-ping" aria-hidden="true" />
+                      )}
+                      <div
+                        className={`relative w-8 h-8 rounded-full flex items-center justify-center border-2 transition ${
+                          isEarned
+                            ? 'bg-amber-500/20 border-amber-500 text-amber-400'
+                            : 'bg-zinc-800 border-zinc-700 text-zinc-600'
+                        }`}
+                      >
+                        <Icon className="w-4 h-4" aria-hidden="true" />
+                        {isLastEarned && (
+                          <div className="absolute -top-1 -right-1 w-3 h-3 bg-amber-500 rounded-full border-2 border-zinc-900" aria-hidden="true" />
+                        )}
+                      </div>
+                    </div>
+                    <span
+                      className={`text-[10px] font-mono font-bold ${isEarned ? 'text-zinc-300' : 'text-zinc-600'}`}
+                    >
+                      {xpBadge(milestone.xp)}
+                    </span>
                   </div>
-                  <span className={`text-[9px] font-mono ${isEarned ? 'text-zinc-300' : 'text-zinc-600'}`}>
-                    {milestone.xp >= 1000 ? `${milestone.xp / 1000}k` : milestone.xp}
-                  </span>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </motion.div>
 
