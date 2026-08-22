@@ -262,7 +262,7 @@ function AppContent() {
       <div className="fixed inset-0 synth-grid-overlay opacity-20 pointer-events-none z-0" />
       <div className="relative z-10 flex flex-col min-h-screen">
         <Suspense fallback={null}>
-          <Navbar activeTab={activeTab} setActiveTab={handleNavigateTab} userState={userState} courses={courses} onOpenCommandPalette={() => setIsCommandPaletteOpen(true)} onOpenUpgradeModal={() => setIsUpgradeModalOpen(true)} />
+          <Navbar activeTab={activeTab} setActiveTab={handleNavigateTab} userState={userState} courses={courses} onOpenCommandPalette={() => setIsCommandPaletteOpen(true)} onOpenUpgradeModal={() => setIsUpgradeModalOpen(true)} onOpenAuthModal={() => setIsAuthModalOpen(true)} />
         </Suspense>
 
         <main id="main-content" className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-24 lg:pb-8" tabIndex={-1}>

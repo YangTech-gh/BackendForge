@@ -50,10 +50,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: window.location.origin,
-        queryParams: {
-          hd: 'gmail.com',
-        },
+        redirectTo: window.location.origin + '/auth/callback',
       },
     });
   };

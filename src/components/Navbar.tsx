@@ -28,6 +28,7 @@ interface NavbarProps {
   courses: CourseTrack[];
   onOpenCommandPalette: () => void;
   onOpenUpgradeModal: () => void;
+  onOpenAuthModal: () => void;
 }
 
 const navItems = [
@@ -58,6 +59,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   courses,
   onOpenCommandPalette,
   onOpenUpgradeModal,
+  onOpenAuthModal,
 }) => {
   const { user, signOut } = useAuth();
   const [showProfile, setShowProfile] = useState(false);
@@ -142,17 +144,27 @@ export const Navbar: React.FC<NavbarProps> = ({
               })}
             </nav>
 
-            {/* Right Controls */}
-            <div className="flex items-center gap-2 shrink-0">
-              <button
-                onClick={onOpenCommandPalette}
-                className="flex items-center gap-2 bg-zinc-800/60 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 border border-zinc-700/50 px-3 py-1.5 rounded-lg text-xs transition font-mono"
-                title="Search (Ctrl+K)"
-                aria-label="Open search"
-              >
-                <Search className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline text-zinc-500">Ctrl+K</span>
-              </button>
+             {/* Right Controls */}
+             <div className="flex items-center gap-2 shrink-0">
+               <button
+                 onClick={onOpenCommandPalette}
+                 className="flex items-center gap-2 bg-zinc-800/60 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 border border-zinc-700/50 px-3 py-1.5 rounded-lg text-xs transition font-mono"
+                 title="Search (Ctrl+K)"
+                 aria-label="Open search"
+               >
+                 <Search className="w-3.5 h-3.5" />
+                 <span className="hidden sm:inline text-zinc-500">Ctrl+K</span>
+               </button>
+
+               {!user && (
+                 <button
+                   onClick={onOpenAuthModal}
+                   className="flex items-center gap-2 bg-gradient-to-r from-red-600 via-rose-600 to-indigo-600 hover:from-red-500 hover:to-indigo-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition shadow-lg shadow-red-600/25 border border-red-500/30"
+                 >
+                   <Zap className="w-3.5 h-3.5 fill-white" />
+                   <span>Sign In</span>
+                 </button>
+               )}
 
               {user && (
                 <>
@@ -215,14 +227,24 @@ export const Navbar: React.FC<NavbarProps> = ({
             </span>
           </button>
 
-          <div className="flex items-center gap-2">
-            <button
-              onClick={onOpenCommandPalette}
-              className="w-9 h-9 rounded-xl bg-zinc-800/60 hover:bg-zinc-800 text-zinc-400 border border-zinc-700/50 flex items-center justify-center transition"
-              aria-label="Open search"
-            >
-              <Search className="w-4 h-4" />
-            </button>
+           <div className="flex items-center gap-2">
+             <button
+               onClick={onOpenCommandPalette}
+               className="w-9 h-9 rounded-xl bg-zinc-800/60 hover:bg-zinc-800 text-zinc-400 border border-zinc-700/50 flex items-center justify-center transition"
+               aria-label="Open search"
+             >
+               <Search className="w-4 h-4" />
+             </button>
+
+             {!user && (
+               <button
+                 onClick={onOpenAuthModal}
+                 className="flex items-center gap-1 bg-gradient-to-r from-red-600 via-rose-600 to-indigo-600 hover:from-red-500 hover:to-indigo-500 text-white font-bold px-3 py-1.5 rounded-lg text-[11px] transition shadow-lg shadow-red-600/25 border border-red-500/30"
+               >
+                 <Zap className="w-3.5 h-3.5 fill-white" />
+                 <span className="hidden sm:inline">Sign In</span>
+               </button>
+             )}
 
             {user && (
               <button
