@@ -3,6 +3,23 @@ import { CourseTrack, CourseLab, UserState } from '../../types';
 import { invokeEdgeFunction } from '../../lib/api';
 import { LabTerminalState, LabAIState } from './types';
 import { getDynamicSuggestedQuestions, getDynamicQuickCommands } from './constants';
+
+const PARADIGM_DEFAULTS: Record<string, { filename: string; language: string }> = {
+  go: { filename: 'main.go', language: 'go' },
+  rust: { filename: 'main.rs', language: 'rust' },
+  python: { filename: 'main.py', language: 'python' },
+  'ruby on rails 7+': { filename: 'app.rb', language: 'ruby' },
+  'java & spring boot': { filename: 'App.java', language: 'java' },
+  elixir: { filename: 'lib/app.ex', language: 'elixir' },
+};
+
+function getDefaultFile(track?: CourseTrack): { filename: string; language: string; code: string } {
+  const paradigm = track?.paradigm?.toLowerCase() || '';
+  for (const [key, fallback] of Object.entries(PARADIGM_DEFAULTS)) {
+    if (paradigm.includes(key)) return { ...fallback, code: '# Write your code here' };
+  }
+  return { filename: 'main.ts', language: 'typescript', code: '// Write your code here' };
+}
 import { LabHeader } from './LabHeader';
 import { InstructionsPane } from './InstructionsPane';
 import { CodeEditorPane } from './CodeEditorPane';
@@ -62,10 +79,10 @@ export const InteractiveLabView: React.FC<InteractiveLabViewProps> = ({
 
   useEffect(() => {
     if (!activeLab) {
-      setFiles([{ filename: 'main.py', language: 'python', code: '# Select a lab' }]);
+      setFiles([getDefaultFile(currentTrack)]);
       return;
     }
-    const labFiles = activeLab.files || [{ filename: 'main.py', language: 'python', code: activeLab.startingCode || '# Write your code here' }];
+    const labFiles = activeLab.files?.length ? activeLab.files : activeLab.initialFiles?.length ? activeLab.initialFiles : [getDefaultFile(currentTrack)];
     setFiles(labFiles);
     setActiveFileIndex(0);
     setTestResults(null);
@@ -98,10 +115,10 @@ export const InteractiveLabView: React.FC<InteractiveLabViewProps> = ({
 
   const handleResetCode = useCallback(() => {
     if (!activeLab) return;
-    const original = activeLab.files || [{ filename: 'main.py', language: 'python', code: activeLab.startingCode || '# Write your code here' }];
+    const original = activeLab.files?.length ? activeLab.files : activeLab.initialFiles?.length ? activeLab.initialFiles : [getDefaultFile(currentTrack)];
     setFiles(original);
     setTestResults(null);
-  }, [activeLab]);
+  }, [activeLab, currentTrack]);
 
   const handleCopyCode = useCallback(() => {
     navigator.clipboard.writeText(activeCode).then(() => {

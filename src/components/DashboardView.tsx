@@ -13,7 +13,10 @@ import {
   Award,
   ShieldAlert,
   BookOpen,
-  Cpu
+  Cpu,
+  Trophy,
+  Flame,
+  Target
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { PRICING } from '../constants/pricing';
@@ -40,8 +43,33 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   const totalTips = courses.reduce((sum, track) => sum + track.labs.reduce((s, lab) => s + (lab.tips?.length || 0), 0), 0);
   const totalLessons = courses.reduce((sum, track) => sum + track.labs.reduce((s, lab) => s + (lab.lessons?.length || 0), 0), 0);
   const totalExercises = courses.reduce((sum, track) => sum + track.labs.reduce((s, lab) => s + (lab.exercises?.length || 0), 0), 0);
+
+  // XP Milestones
+  const XP_MILESTONES = [
+    { xp: 100, label: 'First Steps', icon: Target, color: 'text-zinc-400' },
+    { xp: 500, label: 'Code Warrior', icon: Flame, color: 'text-amber-400' },
+    { xp: 1000, label: 'System Builder', icon: Award, color: 'text-emerald-400' },
+    { xp: 2500, label: 'Architecture Ace', icon: Trophy, color: 'text-purple-400' },
+    { xp: 5000, label: 'Backend Legend', icon: Sparkles, color: 'text-red-400' },
+  ];
+
+  const currentMilestone = XP_MILESTONES.filter(m => userState.xpPoints >= m.xp).pop();
+  const nextMilestone = XP_MILESTONES.find(m => userState.xpPoints < m.xp);
+  const xpProgress = nextMilestone
+    ? ((userState.xpPoints - (currentMilestone?.xp || 0)) / (nextMilestone.xp - (currentMilestone?.xp || 0))) * 100
+    : 100;
   return (
     <div className="space-y-8 pb-16" role="main" aria-label="Dashboard">
+      {/* Hidden SEO content block */}
+      <div className="seo-hidden" aria-hidden="true">
+        <h2>Backend Forge Dashboard - Your Learning Hub</h2>
+        <p>
+          Track your progress across enterprise backend engineering tracks. Access interactive labs,
+          AI code reviews, verified certificates, and system architecture sandbox tools.
+          Backend Forge covers TypeScript, Go, Rust, PostgreSQL, distributed systems, and
+          AI-native backend development for engineers building high-concurrency production systems.
+        </p>
+      </div>
       
       {/* Top Main Bento Grid Row */}
       <div className="grid grid-cols-12 gap-4 items-stretch">
@@ -134,7 +162,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </div>
             <div className="space-y-0.5">
               <div className="text-base font-bold text-red-400 font-sans flex items-center space-x-1">
-                <ShieldAlert className="w-3.5 h-3.5" />
+                <ShieldAlert className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>Sub-5ms Latency</span>
               </div>
               <div className="text-zinc-500 text-[11px]">Production Chaos Hardened</div>
@@ -145,7 +173,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </div>
             <div className="space-y-0.5">
               <div className="text-base font-bold text-emerald-400 font-sans flex items-center space-x-1">
-                <ShieldCheck className="w-3.5 h-3.5" />
+                <ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>Verified Diploma</span>
               </div>
               <div className="text-zinc-500 text-[11px]">Shareable Credential ID</div>
@@ -251,7 +279,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           <div className="flex items-start justify-between">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold">
-                <Award className="w-5 h-5" />
+                <Award className="w-5 h-5" aria-hidden="true" />
               </div>
               <div>
                 <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider font-mono block">
@@ -284,14 +312,14 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               onClick={() => onOpenCertificateModal(userState.inProgressCourseId || courses[0]?.id)}
               className="flex items-center space-x-1 text-xs text-emerald-400 font-mono hover:underline"
             >
-              <Award className="w-3.5 h-3.5" />
+              <Award className="w-3.5 h-3.5" aria-hidden="true" />
               <span>Claim Track Certificate</span>
             </button>
             <button
               onClick={() => onNavigateTab('lab')}
               className="flex items-center space-x-1.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-full text-xs transition font-mono"
             >
-              <Play className="w-3.5 h-3.5 fill-white" />
+              <Play className="w-3.5 h-3.5 fill-white" aria-hidden="true" />
               <span>Resume Lab</span>
             </button>
           </div>
@@ -334,8 +362,76 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               className="flex items-center space-x-1.5 bg-zinc-800 hover:bg-zinc-700 text-red-300 font-bold px-4 py-2 rounded-full text-xs transition font-mono border border-red-500/30"
             >
               <span>Launch Sandbox</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
             </button>
+          </div>
+        </motion.div>
+
+        {/* XP Milestones & Badge Progression */}
+        <motion.div 
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.25, ease: 'easeOut' }}
+          className="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 shadow-lg"
+          role="region"
+          aria-label="XP milestones and badges"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+                <Trophy className="w-5 h-5 text-amber-400" />
+              </div>
+              <div>
+                <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider font-mono block">
+                  XP MILESTONES
+                </span>
+                <h3 className="text-base font-bold text-white">{userState.xpPoints.toLocaleString()} XP Earned</h3>
+              </div>
+            </div>
+            {currentMilestone && (
+              <span className={`text-[10px] font-mono px-2.5 py-1 rounded-full bg-zinc-800 ${currentMilestone.color} border border-zinc-700 font-bold flex items-center space-x-1`}>
+                <currentMilestone.icon className="w-3 h-3" aria-hidden="true" />
+                <span>{currentMilestone.label}</span>
+              </span>
+            )}
+          </div>
+
+          {/* XP Progress to Next Milestone */}
+          {nextMilestone && (
+            <div className="mb-4 space-y-2">
+              <div className="flex justify-between text-xs font-mono text-zinc-400">
+                <span>Next: {nextMilestone.label}</span>
+                <span className="text-amber-400 font-bold">{userState.xpPoints} / {nextMilestone.xp} XP</span>
+              </div>
+              <div className="h-2 w-full bg-zinc-800 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-amber-500 to-orange-500 rounded-full transition-all duration-500"
+                  style={{ width: `${Math.min(100, Math.max(5, xpProgress))}%` }}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Badge Timeline */}
+          <div className="flex items-center justify-between pt-2">
+            {XP_MILESTONES.map((milestone, idx) => {
+              const isEarned = userState.xpPoints >= milestone.xp;
+              const Icon = milestone.icon;
+              return (
+                <div key={idx} className="flex flex-col items-center space-y-1">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center transition ${
+                    isEarned
+                      ? 'bg-amber-500/20 border border-amber-500/40 text-amber-400'
+                      : 'bg-zinc-800 border border-zinc-700 text-zinc-600'
+                  }`}>
+                    <Icon className="w-4 h-4" aria-hidden="true" />
+                  </div>
+                  <span className={`text-[9px] font-mono ${isEarned ? 'text-zinc-300' : 'text-zinc-600'}`}>
+                    {milestone.xp >= 1000 ? `${milestone.xp / 1000}k` : milestone.xp}
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </motion.div>
 
@@ -362,7 +458,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
           <article className="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 space-y-3">
             <div className="p-2.5 bg-zinc-800 rounded-2xl text-purple-400 w-fit" aria-hidden="true">
-              <Bot className="w-5 h-5" />
+              <Bot className="w-5 h-5" aria-hidden="true" />
             </div>
             <h3 className="text-base font-bold text-white">AI Systems Integration</h3>
             <p className="text-xs text-zinc-400 leading-relaxed">
@@ -372,7 +468,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
           <article className="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 space-y-3">
             <div className="p-2.5 bg-zinc-800 rounded-2xl text-emerald-400 w-fit" aria-hidden="true">
-              <TrendingUp className="w-5 h-5" />
+              <TrendingUp className="w-5 h-5" aria-hidden="true" />
             </div>
             <h3 className="text-base font-bold text-white">Outcome & RFC Leadership</h3>
             <p className="text-xs text-zinc-400 leading-relaxed">
@@ -451,10 +547,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                   className="text-xs font-bold text-indigo-400 hover:text-indigo-300 flex items-center space-x-1"
                 >
                   <span>Explore</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                 </button>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </section>
@@ -507,7 +603,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               <p className="text-xs text-zinc-400 line-clamp-2 leading-relaxed">
                 {item.summary}
               </p>
-            </div>
+            </article>
           ))}
         </div>
       </section>

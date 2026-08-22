@@ -1,0 +1,19 @@
+# Backend Forge - robots.txt
+# https://backendforge.dev
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /.github/
+
+# Explicitly allow Googlebot
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+
+# Allow Bingbot
+User-agent: bingbot
+Allow: /
+
+# Sitemap location
+Sitemap: https://backendforge.dev/sitemap.xml

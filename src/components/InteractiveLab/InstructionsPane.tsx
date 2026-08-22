@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   BookOpen, Lightbulb, Code, ChevronDown, CheckCircle2, XCircle,
 } from 'lucide-react';
@@ -10,11 +10,35 @@ interface InstructionsPaneProps {
   testResults: { id: string; passed: boolean; output: string }[] | null;
 }
 
+function parseRequirements(markdown: string): string[] {
+  const lines = markdown.split('\n');
+  const inRequirements = false;
+  const requirements: string[] = [];
+  let inSection = false;
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (/^###\s+Requirements/i.test(trimmed)) { inSection = true; continue; }
+    if (inSection && /^#{1,2}\s/.test(trimmed)) break;
+    if (inSection && /^\d+\.\s/.test(trimmed)) {
+      requirements.push(trimmed.replace(/^\d+\.\s+/, ''));
+    }
+  }
+  if (requirements.length === 0) {
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (/^\d+\.\s/.test(trimmed)) requirements.push(trimmed.replace(/^\d+\.\s+/, ''));
+    }
+  }
+  return requirements;
+}
+
 export const InstructionsPane: React.FC<InstructionsPaneProps> = ({ activeLab, testResults }) => {
   const [showHint, setShowHint] = useState(false);
   const [showTips, setShowTips] = useState(false);
   const [showLessons, setShowLessons] = useState(false);
   const [showExercises, setShowExercises] = useState(false);
+
+  const requirements = useMemo(() => parseRequirements(activeLab.instructions || ''), [activeLab.instructions]);
 
   return (
     <div className="space-y-4">
@@ -28,19 +52,21 @@ export const InstructionsPane: React.FC<InstructionsPaneProps> = ({ activeLab, t
         </div>
 
         {/* Instructions Checklist */}
-        <div className="space-y-3 pt-2 border-t border-zinc-800/60">
-          <h3 className="text-xs font-mono uppercase text-zinc-400 font-bold tracking-wider">Requirements</h3>
-          <ol className="space-y-2">
-            {activeLab.instructions.map((inst, idx) => (
-              <li key={idx} className="flex items-start gap-2 text-xs text-zinc-300 bg-zinc-950/60 p-3 rounded-xl border border-zinc-800/60">
-                <span className="w-4 h-4 rounded-full bg-red-500/10 text-red-400 font-mono text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5 border border-red-500/20">
-                  {idx + 1}
-                </span>
-                <span className="leading-relaxed">{inst}</span>
-              </li>
-            ))}
-          </ol>
-        </div>
+        {requirements.length > 0 && (
+          <div className="space-y-3 pt-2 border-t border-zinc-800/60">
+            <h3 className="text-xs font-mono uppercase text-zinc-400 font-bold tracking-wider">Requirements</h3>
+            <ol className="space-y-2">
+              {requirements.map((inst, idx) => (
+                <li key={idx} className="flex items-start gap-2 text-xs text-zinc-300 bg-zinc-950/60 p-3 rounded-xl border border-zinc-800/60">
+                  <span className="w-4 h-4 rounded-full bg-red-500/10 text-red-400 font-mono text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5 border border-red-500/20">
+                    {idx + 1}
+                  </span>
+                  <span className="leading-relaxed">{inst}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
 
         {/* Collapsible Sections */}
         {activeLab.tips?.length > 0 && (
@@ -132,7 +158,7 @@ export const InstructionsPane: React.FC<InstructionsPaneProps> = ({ activeLab, t
               return (
                 <div key={tc.id} className="p-3 rounded-xl bg-zinc-950/60 border border-zinc-800/60 text-xs space-y-1">
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-zinc-200">{tc.name}</span>
+                    <span className="font-bold text-zinc-200">Test {tc.order}: {tc.description}</span>
                     {result ? (
                       result.passed ? (
                         <span className="badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px]">
@@ -147,7 +173,7 @@ export const InstructionsPane: React.FC<InstructionsPaneProps> = ({ activeLab, t
                       <span className="text-[10px] font-mono text-zinc-500">PENDING</span>
                     )}
                   </div>
-                  <p className="text-[11px] text-zinc-400">{tc.expectedOutcome}</p>
+                  <p className="text-[11px] text-zinc-400">Expected: {tc.description}</p>
                 </div>
               );
             })}

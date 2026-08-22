@@ -81,6 +81,16 @@ export const SystemDesignerSandbox: React.FC = () => {
 
   return (
     <div className="space-y-8 pb-16" role="main" aria-label="System Architecture Designer">
+      {/* Hidden SEO content block */}
+      <div className="seo-hidden" aria-hidden="true">
+        <h2>Interactive System Architecture and Concurrency Sandbox</h2>
+        <p>
+          Design distributed backend topology, simulate peak traffic spikes, detect single points
+          of failure, analyze connection pool exhaustion, and generate formal technical RFCs using
+          AI architecture review. Test your system design skills with real RPS simulation and
+          latency budget analysis across API gateways, rate limiters, caches, databases, and queues.
+        </p>
+      </div>
       
       {/* Header */}
       <header className="border-b border-zinc-800 pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -115,7 +125,7 @@ export const SystemDesignerSandbox: React.FC = () => {
             <span>{isEvaluating ? 'Evaluating Topology...' : 'Evaluate via Forger 1.0 API'}</span>
           </button>
         </div>
-      </div>
+      </header>
 
       {/* Top Configuration Controls */}
       <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 shadow-xl">

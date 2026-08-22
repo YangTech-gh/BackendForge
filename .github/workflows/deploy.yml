@@ -38,6 +38,17 @@ jobs:
           VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
           VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.VITE_SUPABASE_PUBLISHABLE_KEY }}
 
+      - name: Generate sitemap
+        run: bunx tsx scripts/generate-sitemap.ts
+
+      - name: Copy robots.txt and 404.html to dist
+        run: |
+          cp robots.txt dist/robots.txt
+          cp 404.html dist/404.html
+
+      - name: Create .nojekyll
+        run: touch dist/.nojekyll
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

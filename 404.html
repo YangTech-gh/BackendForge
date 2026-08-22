@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Backend Forge — From API Builders to AI-Native Systems Architects</title>
+    <meta name="description" content="Master high-concurrency systems, race condition locks, PostgreSQL transaction isolation, and distributed fault tolerance. Interactive labs with AI mentor for backend engineers." />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <style>
+      html { background: #09090b; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        background-color: #09090b;
+        color: #d4d4d8;
+      }
+      .container { text-align: center; padding: 2rem; }
+      h1 { font-size: 1.5rem; font-weight: 800; color: white; margin-bottom: 0.5rem; }
+      p { font-size: 0.875rem; color: #71717a; margin-bottom: 1.5rem; }
+      a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background: linear-gradient(135deg, #dc2626, #e11d48, #4f46e5);
+        color: white;
+        font-weight: 700;
+        font-size: 0.8125rem;
+        border-radius: 0.75rem;
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      a:hover { filter: brightness(1.1); }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Page Not Found</h1>
+      <p>The page you're looking for doesn't exist. It may have been moved or the URL might be incorrect.</p>
+      <a href="/">Go to Backend Forge</a>
+    </div>
+    <script>
+      // SPA fallback: redirect all 404s to root so React router handles it
+      (function() {
+        var path = window.location.pathname;
+        if (path !== '/' && path !== '/index.html') {
+          window.location.replace('/#' + path);
+        }
+      })();
+    </script>
+  </body>
+</html>

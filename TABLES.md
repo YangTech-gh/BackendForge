@@ -385,6 +385,8 @@ Master user state (replaces localStorage).
 | stripe_webhook_events | idx_stripe_webhook_created_at | created_at |
 | stripe_webhook_events | idx_stripe_webhook_type | event_type |
 | stripe_webhook_events | idx_stripe_webhook_processed | processed |
+| teardowns | idx_teardowns_slug | slug |
+| teardowns | idx_teardowns_published | published_at DESC |
 
 ---
 

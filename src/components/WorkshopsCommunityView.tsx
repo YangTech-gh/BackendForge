@@ -55,6 +55,16 @@ export const WorkshopsCommunityView: React.FC<WorkshopsCommunityViewProps> = ({
 
   return (
     <div className="space-y-8 pb-16" role="main" aria-label="Workshops and Community">
+      {/* Hidden SEO content block */}
+      <div className="seo-hidden" aria-hidden="true">
+        <h2>Backend Engineering Workshops and Community</h2>
+        <p>
+          Join monthly live system design workshops, book 1-on-1 architecture coaching calls with
+          senior staff engineers, and connect with the Backend Forge community on Discord.
+          Learn distributed systems patterns, RFC writing, and technical leadership skills
+          through interactive mentorship and peer collaboration.
+        </p>
+      </div>
       
       {/* Header */}
       <header className="border-b border-zinc-800/80 pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -70,7 +80,7 @@ export const WorkshopsCommunityView: React.FC<WorkshopsCommunityViewProps> = ({
             Connect with senior backend engineers, attend monthly live "System Design & Ship" workshops, and book 1-on-1 technical coaching calls.
           </p>
         </div>
-      </div>
+      </header>
 
       {/* 1-on-1 Coaching Banner (Pro Tier Feature) */}
       <section className="liquid-glass-red rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden" aria-labelledby="coaching-heading">
@@ -171,11 +181,11 @@ export const WorkshopsCommunityView: React.FC<WorkshopsCommunityViewProps> = ({
                     {isRsvped ? '✓ RSVPed' : 'Reserve Spot'}
                   </button>
                 </div>
-              </div>
+              </article>
             );
           })}
         </div>
-      </div>
+      </section>
 
       {/* Private Discord Channel Callout */}
       <section className="liquid-glass border border-zinc-800/80 rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl relative overflow-hidden" aria-labelledby="discord-heading">

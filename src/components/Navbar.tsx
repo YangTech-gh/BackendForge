@@ -13,6 +13,8 @@ import {
   ChevronRight,
   Menu,
   X,
+  Settings,
+  Bot,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { PRICING } from '../constants/pricing';
@@ -32,10 +34,13 @@ const navItems = [
   { id: 'dashboard', label: 'Home', icon: Layers },
   { id: 'tracks', label: 'Tracks', icon: Server },
   { id: 'lab', label: 'Labs', icon: Terminal },
+  { id: 'ai-chat', label: 'AI Chat', icon: Bot },
   { id: 'system-designer', label: 'Design', icon: Cpu },
   { id: 'starter-kits', label: 'Kits', icon: Download },
   { id: 'teardowns', label: 'Reads', icon: BookOpen },
   { id: 'workshops', label: 'Events', icon: Users },
+  { id: 'pricing', label: 'Pricing', icon: Zap },
+  { id: 'settings', label: 'Settings', icon: Settings },
 ];
 
 const mobileNavItems = [
@@ -105,7 +110,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               aria-label="Go to dashboard"
             >
               <div className="w-8 h-8 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-500 group-hover:bg-red-500/20 transition">
-                <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" role="img" aria-label="Backend Forge logo"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
               </div>
               <div className="hidden xl:block">
                 <span className="text-base font-extrabold tracking-tight text-white font-mono">
@@ -203,7 +208,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             aria-label="Go to dashboard"
           >
             <div className="w-7 h-7 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-500">
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" role="img" aria-label="Backend Forge logo"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
             </div>
             <span className="text-base font-extrabold tracking-tight text-white font-mono">
               Backend<span className="text-red-500">Forge</span>

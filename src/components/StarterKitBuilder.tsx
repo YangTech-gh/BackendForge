@@ -20,7 +20,17 @@ export const StarterKitBuilder: React.FC<StarterKitBuilderProps> = ({ kits }) =>
 
   if (kits.length === 0) {
     return (
-      <div className="space-y-8 pb-16" role="main" aria-label="Starter Kit Builder">
+    <div className="space-y-8 pb-16" role="main" aria-label="Starter Kit Builder">
+      {/* Hidden SEO content block */}
+      <div className="seo-hidden" aria-hidden="true">
+        <h2>Production Backend Starter Kits and Boilerplates</h2>
+        <p>
+          Download production-ready backend starter kits with PostgreSQL, Redis queues, Docker,
+          CI/CD pipelines, and authentication pre-configured. Choose from Node.js and TypeScript,
+          Ruby on Rails, Rust and Go, or AI-Native Agentic Backend stacks. Each kit includes
+          database schemas, queue workers, environment configuration, and deployment scripts.
+        </p>
+      </div>
         <header className="border-b border-zinc-800/80 pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
             <span className="text-xs font-mono font-bold text-red-400 uppercase tracking-widest flex items-center gap-1.5">
@@ -75,7 +85,7 @@ export const StarterKitBuilder: React.FC<StarterKitBuilderProps> = ({ kits }) =>
             Skip boilerplate fatigue. Export production-ready, highly polished starter templates with PostgreSQL, Redis queues, Docker setup, and CI/CD pipelines pre-configured.
           </p>
         </div>
-      </div>
+      </header>
 
       {/* Kit Selector Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4" role="listbox" aria-label="Select a starter kit">

@@ -7,7 +7,8 @@
     <meta name="description" content="Master high-concurrency systems, race condition locks, PostgreSQL transaction isolation, and distributed fault tolerance. Interactive labs with AI mentor for backend engineers." />
     <meta name="keywords" content="backend engineering, systems architecture, high concurrency, PostgreSQL, distributed systems, AI-native, interactive labs, TypeScript, Go, Rust, Redis" />
     <meta name="author" content="Backend Forge" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
 
     <!-- Open Graph / Social Sharing -->
     <meta property="og:type" content="website" />
@@ -16,6 +17,7 @@
     <meta property="og:image" content="/og-image.png" />
     <meta property="og:url" content="https://backendforge.dev" />
     <meta property="og:site_name" content="Backend Forge" />
+    <meta property="og:locale" content="en_US" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -25,16 +27,20 @@
 
     <!-- Theme Color for Mobile Browsers -->
     <meta name="theme-color" content="#09090b" />
+    <meta name="msapplication-TileColor" content="#09090b" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://backendforge.dev" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" href="https://backendforge.dev/apple-touch-icon.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300..800;1,300..800&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 
-    <!-- Structured Data for SEO -->
+    <!-- Structured Data: WebApplication -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -64,6 +70,79 @@
     }
     </script>
 
+    <!-- Structured Data: Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Backend Forge",
+      "url": "https://backendforge.dev",
+      "logo": "https://backendforge.dev/logo.png",
+      "description": "Interactive backend engineering platform with production-grade labs, AI mentorship, and verified certificates.",
+      "sameAs": [
+        "https://github.com/backendforge",
+        "https://twitter.com/backendforge",
+        "https://discord.gg/backendforge",
+        "https://linkedin.com/company/backendforge",
+        "https://youtube.com/@backendforge"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "availableLanguage": "English"
+      }
+    }
+    </script>
+
+    <!-- Structured Data: WebSite with SearchAction -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Backend Forge",
+      "url": "https://backendforge.dev",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://backendforge.dev/#/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <!-- Structured Data: BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://backendforge.dev"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Dashboard",
+          "item": "https://backendforge.dev/#/dashboard"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Tracks",
+          "item": "https://backendforge.dev/#/tracks"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Teardowns",
+          "item": "https://backendforge.dev/#/teardowns"
+        }
+      ]
+    }
+    </script>
+
     <style>
       /* Prevent FOUC */
       html { background: #09090b; }
@@ -82,6 +161,13 @@
   </head>
   <body class="bg-zinc-950 text-zinc-100 font-sans antialiased selection:bg-red-500/30 selection:text-red-200">
     <div id="root"></div>
+    <noscript>
+      <div style="padding: 2rem; text-align: center; color: #a1a1aa; font-family: system-ui, sans-serif;">
+        <h1 style="font-size: 1.5rem; color: #fff; margin-bottom: 0.5rem;">Backend Forge</h1>
+        <p>JavaScript is required to run this application.</p>
+        <p style="font-size: 0.875rem; color: #71717a;">Please enable JavaScript in your browser settings and reload the page.</p>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -129,7 +129,7 @@ export const TracksCatalogView: React.FC<TracksCatalogViewProps> = ({
                   <ul className="space-y-1.5">
                     {track.learningGoals.map((goal, i) => (
                       <li key={i} className="flex items-start space-x-2 text-xs text-zinc-400">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" aria-hidden="true" />
                         <span>{goal}</span>
                       </li>
                     ))}
@@ -142,7 +142,7 @@ export const TracksCatalogView: React.FC<TracksCatalogViewProps> = ({
                   <span className="text-[10px] font-mono uppercase text-indigo-400 font-bold bg-indigo-500/10 px-2.5 py-0.5 rounded-full border border-indigo-500/20">
                     SHIPPABLE PROJECT DELIVERABLE
                   </span>
-                  <Code2 className="w-4 h-4 text-zinc-500" />
+                  <Code2 className="w-4 h-4 text-zinc-500" aria-hidden="true" />
                 </div>
                 <h4 className="text-sm font-bold text-white">{track.deliverableProject.title}</h4>
                 <p className="text-xs text-zinc-400 leading-relaxed">{track.deliverableProject.description}</p>
@@ -235,17 +235,17 @@ export const TracksCatalogView: React.FC<TracksCatalogViewProps> = ({
                             )}
                           </div>
                           <span className="text-[10px] font-mono text-zinc-500 flex items-center space-x-1">
-                            <Clock className="w-3 h-3" />
+                            <Clock className="w-3 h-3" aria-hidden="true" />
                             <span>{lab.durationMinutes} mins</span>
                           </span>
                         </div>
 
                         <h4 className="text-sm font-bold text-white flex items-center justify-between">
                           <span className="flex items-center gap-2">
-                            {isCompleted && <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />}
+                            {isCompleted && <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" aria-hidden="true" />}
                             <span>{lab.title}</span>
                           </span>
-                          {isLocked && <Lock className="w-3.5 h-3.5 text-indigo-400 shrink-0" title="Pro Tier Required" />}
+                          {isLocked && <Lock className="w-3.5 h-3.5 text-indigo-400 shrink-0" aria-label="Pro Tier Required" />}
                         </h4>
 
                         <p className="text-xs text-zinc-400 line-clamp-2">{lab.conceptSummary}</p>
@@ -257,25 +257,25 @@ export const TracksCatalogView: React.FC<TracksCatalogViewProps> = ({
                               lab.scaffolding.stage === 'Building' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
                               'bg-purple-500/10 text-purple-400 border-purple-500/20'
                             }`}>
-                              <Layers className="w-3 h-3" />
+                              <Layers className="w-3 h-3" aria-hidden="true" />
                               {lab.scaffolding.stage}
                             </span>
                           )}
                           {lab.tips && lab.tips.length > 0 && (
                             <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                              <Lightbulb className="w-3 h-3" />
+                              <Lightbulb className="w-3 h-3" aria-hidden="true" />
                               {lab.tips.length} tips
                             </span>
                           )}
                           {lab.lessons && lab.lessons.length > 0 && (
                             <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                              <BookOpen className="w-3 h-3" />
+                              <BookOpen className="w-3 h-3" aria-hidden="true" />
                               {lab.lessons.length} lessons
                             </span>
                           )}
                           {lab.exercises && lab.exercises.length > 0 && (
                             <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
-                              <Code className="w-3 h-3" />
+                              <Code className="w-3 h-3" aria-hidden="true" />
                               {lab.exercises.length} exercises
                             </span>
                           )}
@@ -294,7 +294,7 @@ export const TracksCatalogView: React.FC<TracksCatalogViewProps> = ({
                         </span>
                         {isCompleted ? (
                           <span className="text-xs font-bold text-emerald-400 flex items-center space-x-1 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full">
-                            <CheckCircle2 className="w-3 h-3" />
+                            <CheckCircle2 className="w-3 h-3" aria-hidden="true" />
                             <span>Completed</span>
                           </span>
                         ) : isLocked ? (
@@ -302,7 +302,7 @@ export const TracksCatalogView: React.FC<TracksCatalogViewProps> = ({
                             onClick={onOpenUpgradeModal}
                             className="text-xs font-bold text-red-400 hover:text-red-300 flex items-center space-x-1"
                           >
-                            <Zap className="w-3 h-3 fill-red-400" />
+                            <Zap className="w-3 h-3 fill-red-400" aria-hidden="true" />
                             <span>Unlock Pro Lab</span>
                           </button>
                         ) : (
@@ -310,7 +310,7 @@ export const TracksCatalogView: React.FC<TracksCatalogViewProps> = ({
                             onClick={() => onLaunchLab(track.id, lab.id)}
                             className="flex items-center space-x-1 bg-gradient-to-r from-red-600 via-rose-600 to-indigo-600 hover:from-red-500 hover:to-indigo-500 text-white font-bold px-3.5 py-1.5 rounded-full text-xs transition font-mono shadow-md shadow-red-600/25"
                           >
-                            <Play className="w-3 h-3 fill-white" />
+                            <Play className="w-3 h-3 fill-white" aria-hidden="true" />
                             <span>Launch Lab</span>
                           </button>
                         )}
@@ -328,6 +328,16 @@ export const TracksCatalogView: React.FC<TracksCatalogViewProps> = ({
 
   return (
     <div className="space-y-8 pb-16" role="main" aria-label="Course Tracks Catalog">
+      {/* Hidden SEO content block */}
+      <div className="seo-hidden" aria-hidden="true">
+        <h2>Backend Engineering Course Tracks - Enterprise Curriculum</h2>
+        <p>
+          Browse enterprise backend engineering tracks organized into 4 tiers: Fundamentals,
+          Paradigm Stacks, Architecture and Patterns, and Specialization. Each track includes
+          interactive labs with test verification, AI mentorship, and production-grade deliverables.
+          Master TypeScript, Go, Rust, PostgreSQL, Redis, and distributed systems.
+        </p>
+      </div>
       {/* Header */}
       <header className="border-b border-zinc-800 pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
@@ -339,7 +349,7 @@ export const TracksCatalogView: React.FC<TracksCatalogViewProps> = ({
             Backend Systems & Product Engineering Tracks
           </h1>
           <p className="text-sm text-zinc-400 mt-1 max-w-2xl leading-relaxed">
-            16 tracks across 4 tiers. Mix and match modular tracks. Every track centers around building a production-grade, shippable backend engine with automated test verification.
+            {courses.length} tracks across 4 tiers. Mix and match modular tracks. Every track centers around building a production-grade, shippable backend engine with automated test verification.
           </p>
         </div>
 

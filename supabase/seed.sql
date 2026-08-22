@@ -7,7 +7,7 @@
 -- 1. Track definitions (16 tracks across 4 tiers)
 \i supabase/seed-tracks.sql
 
--- 2. Labs (34 labs across 16 tracks, modularized)
+-- 2. Labs (40 labs across 21 tracks, modularized)
 \i supabase/seed-labs.sql
 
 -- 3. Starter kits (code templates for each track)

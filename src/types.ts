@@ -30,11 +30,12 @@ export interface CourseLab {
     code: string;
   }[];
   startingCode?: string;
-  instructions: string[];
+  instructions: string;
   testCases: {
     id: string;
-    name: string;
-    expectedOutcome: string;
+    description: string;
+    order: number;
+    required: boolean;
   }[];
   tips: string[];
   lessons: string[];
@@ -93,6 +94,7 @@ export interface SystemConnection {
 
 export interface TeardownArticle {
   id: string;
+  slug: string;
   company: string;
   logoColor: string;
   title: string;
@@ -102,6 +104,11 @@ export interface TeardownArticle {
   architectureOverview: string;
   rfcCodeSnippet: string;
   tags: string[];
+  publishedAt: string;
+  author: string;
+  faqPairs: Array<{ question: string; answer: string }>;
+  seoDescription: string;
+  keywords: string[];
 }
 
 export interface StarterKitOption {

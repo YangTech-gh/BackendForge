@@ -160,7 +160,7 @@ def extract_seed_workshops():
     """Extract workshop IDs from seed-workshops.sql."""
     content = read_file(SUPABASE / "seed-workshops.sql")
     workshops = []
-    for m in re.finditer(r"\('(workshop-[a-z0-9-]+)'", content):
+    for m in re.finditer(r"\('(ws-[a-z0-9-]+)'", content):
         workshops.append(m.group(1))
     return workshops
 
@@ -322,7 +322,7 @@ def check_lab_files_exist():
     """Check that all 16 track lab files exist."""
     print("\n[7] Lab track files")
     existing = set(f.name for f in SEED_LABS.glob("track-*.sql"))
-    expected = {f"track-{str(i).zfill(2)}.sql" for i in range(1, 17)}
+    expected = {f"track-{str(i).zfill(2)}.sql" for i in range(1, 22)}
 
     missing = expected - existing
     extra = existing - expected
@@ -355,8 +355,8 @@ def check_edge_functions(tables_in_migrations):
 def check_kits_count(kits):
     """Check starter kit count matches tracks."""
     print("\n[9] Starter kit count")
-    if len(kits) == 16:
-        ok(f"16 starter kits (matches 16 tracks)")
+    if len(kits) == 21:
+        ok(f"21 starter kits (matches 21 tracks)")
     else:
         err(f"Expected 16 starter kits, found {len(kits)}")
 
@@ -365,7 +365,7 @@ def check_lab_count(labs):
     """Check total lab count."""
     print("\n[10] Total lab count")
     count = len(labs)
-    if count == 34:
+    if count == 48:
         ok(f"{count} labs total")
     else:
         warn(f"Expected 34 labs, found {count}")

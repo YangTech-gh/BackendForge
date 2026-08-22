@@ -13,9 +13,9 @@ COMMENT ON COLUMN public.course_tracks.tier IS 'Course tier: fundamentals (Tier 
 
 -- Update existing tracks with correct tiers
 UPDATE public.course_tracks SET tier = 'fundamentals' WHERE track_number IN (1, 2, 3, 4);
-UPDATE public.course_tracks SET tier = 'paradigm_stacks' WHERE track_number IN (5, 6, 7, 8);
-UPDATE public.course_tracks SET tier = 'architecture' WHERE track_number IN (9, 10, 11, 12);
-UPDATE public.course_tracks SET tier = 'specialization' WHERE track_number IN (13, 14, 15, 16);
+UPDATE public.course_tracks SET tier = 'paradigm_stacks' WHERE track_number IN (5, 6, 7, 8, 13);
+UPDATE public.course_tracks SET tier = 'architecture' WHERE track_number IN (9, 10, 11, 12, 17, 18, 19, 21);
+UPDATE public.course_tracks SET tier = 'specialization' WHERE track_number IN (14, 15, 16, 20);
 
 -- Add index for tier queries
 CREATE INDEX IF NOT EXISTS idx_course_tracks_tier ON public.course_tracks (tier);
