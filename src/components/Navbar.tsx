@@ -16,6 +16,7 @@ import {
   Settings,
   Bot,
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 import { useAuth } from '../context/AuthContext';
 import { PRICING } from '../constants/pricing';
 import { UserState, CourseTrack } from '../types';
@@ -82,23 +83,34 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Pro Upgrade Banner (Desktop) */}
       {userState.tier === 'free' && (
-        <div className="hidden lg:block bg-gradient-to-r from-red-950/80 via-zinc-900 to-red-950/80 border-b border-red-500/20 text-white px-4 py-1.5 text-xs font-semibold no-print" role="banner" aria-label="Pro upgrade banner">
+        <motion.div
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: 'auto', opacity: 1 }}
+          className="hidden lg:block bg-gradient-to-r from-red-950/80 via-zinc-900 to-red-950/80 border-b border-red-500/20 text-white px-4 py-1.5 text-xs font-semibold no-print overflow-hidden" role="banner" aria-label="Pro upgrade banner"
+        >
           <div className="max-w-7xl mx-auto flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Zap className="w-3.5 h-3.5 text-red-400" />
+              <motion.div
+                animate={{ rotate: [0, 15, -15, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                <Zap className="w-3.5 h-3.5 text-red-400" />
+              </motion.div>
               <span>
                 <strong className="text-red-300">Backend Forge Pro:</strong> Claim Lifetime Access for <strong className="text-emerald-400 font-mono">{PRICING.PRO_LIFETIME_PRICE_DISPLAY}</strong> (One-time, no subscription).
               </span>
             </div>
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={onOpenUpgradeModal}
-              className="flex items-center gap-1 bg-red-600 hover:bg-red-500 text-white text-xs px-3 py-1 rounded-full font-bold transition"
+              className="flex items-center gap-1 bg-red-600 hover:bg-red-500 text-white text-xs px-3 py-1 rounded-full font-bold transition shadow-lg shadow-red-600/25"
             >
               <span>Claim Pro</span>
               <ChevronRight className="w-3 h-3" />
-            </button>
+            </motion.button>
           </div>
-        </div>
+        </motion.div>
       )}
 
       {/* Desktop Header */}
@@ -106,20 +118,22 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 gap-4">
             {/* Brand */}
-            <button
+            <motion.button
+              whileHover={{ scale: 1.02 }}
               onClick={() => setActiveTab('dashboard')}
               className="flex items-center gap-2.5 shrink-0 group"
               aria-label="Go to dashboard"
             >
-              <div className="w-8 h-8 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-500 group-hover:bg-red-500/20 transition">
-                <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" role="img" aria-label="Backend Forge logo"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              <div className="w-8 h-8 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-500 group-hover:bg-red-500/20 group-hover:border-red-500/30 transition relative">
+                <svg className="w-4.5 h-4.5 relative z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" role="img" aria-label="Backend Forge logo"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                <div className="absolute inset-0 rounded-xl bg-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
               <div className="hidden xl:block">
                 <span className="text-base font-extrabold tracking-tight text-white font-mono">
                   Backend<span className="text-red-500">Forge</span>
                 </span>
               </div>
-            </button>
+            </motion.button>
 
             {/* Navigation Tabs */}
             <nav className="flex items-center gap-0.5 overflow-x-auto py-1 scrollbar-none" aria-label="Main navigation">
@@ -127,67 +141,79 @@ export const Navbar: React.FC<NavbarProps> = ({
                 const Icon = item.icon;
                 const isActive = activeTab === item.id;
                 return (
-                  <button
+                  <motion.button
                     key={item.id}
                     onClick={() => setActiveTab(item.id)}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap ${
+                    className={`relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap ${
                       isActive
                         ? 'bg-red-500/15 text-red-300 font-semibold border border-red-500/20'
                         : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/60'
                     }`}
                     aria-current={isActive ? 'page' : undefined}
+                    whileHover={{ y: -1 }}
+                    whileTap={{ y: 0 }}
                   >
                     <Icon className="w-3.5 h-3.5" />
                     <span>{item.label}</span>
-                  </button>
+                    {isActive && <motion.div layoutId="nav-underline" className="absolute -bottom-0.5 left-1 right-1 h-0.5 bg-gradient-to-r from-red-500 to-indigo-500 rounded-full" transition={{ type: 'spring', stiffness: 300, damping: 30 }} />}
+                  </motion.button>
                 );
               })}
             </nav>
 
-             {/* Right Controls */}
-             <div className="flex items-center gap-2 shrink-0">
-               <button
-                 onClick={onOpenCommandPalette}
-                 className="flex items-center gap-2 bg-zinc-800/60 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 border border-zinc-700/50 px-3 py-1.5 rounded-lg text-xs transition font-mono"
-                 title="Search (Ctrl+K)"
-                 aria-label="Open search"
-               >
-                 <Search className="w-3.5 h-3.5" />
-                 <span className="hidden sm:inline text-zinc-500">Ctrl+K</span>
-               </button>
+            {/* Right Controls */}
+            <div className="flex items-center gap-2 shrink-0">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={onOpenCommandPalette}
+                className="flex items-center gap-2 bg-zinc-800/60 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 border border-zinc-700/50 px-3 py-1.5 rounded-lg text-xs transition font-mono"
+                title="Search (Ctrl+K)"
+                aria-label="Open search"
+              >
+                <Search className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline text-zinc-500">Ctrl+K</span>
+              </motion.button>
 
-               {!user && (
-                 <button
-                   onClick={onOpenAuthModal}
-                   className="flex items-center gap-2 bg-gradient-to-r from-red-600 via-rose-600 to-indigo-600 hover:from-red-500 hover:to-indigo-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition shadow-lg shadow-red-600/25 border border-red-500/30"
-                 >
-                   <Zap className="w-3.5 h-3.5 fill-white" />
-                   <span>Sign In</span>
-                 </button>
-               )}
-
-              {user && (
+              {!user ? (
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={onOpenAuthModal}
+                  className="flex items-center gap-2 bg-gradient-to-r from-red-600 via-rose-600 to-indigo-600 hover:from-red-500 hover:to-indigo-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition shadow-lg shadow-red-600/25 border border-red-500/30 sign-in-glow"
+                >
+                  <Zap className="w-3.5 h-3.5 fill-white" />
+                  <span>Sign In</span>
+                </motion.button>
+              ) : (
                 <>
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() => setShowProfile(true)}
                     className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-zinc-800/60 transition"
                     aria-label="Open profile"
                   >
-                    <div className="w-7 h-7 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-[10px] font-bold text-white">
+                    <div className="w-7 h-7 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-[10px] font-bold text-white ring-2 ring-zinc-800">
                       {(user.user_metadata?.full_name || user.email || 'U').charAt(0).toUpperCase()}
                     </div>
                     <span className="text-xs text-zinc-300 hidden sm:inline max-w-[100px] truncate">{user.user_metadata?.full_name || user.email?.split('@')[0] || 'User'}</span>
-                  </button>
+                  </motion.button>
                 </>
               )}
 
               {userState.tier === 'pro' ? (
-                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-mono font-semibold">
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-mono font-semibold pro-badge-pulse"
+                >
                   <Sparkles className="w-3 h-3" />
                   <span>PRO</span>
-                </div>
+                </motion.div>
               ) : (
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={onOpenUpgradeModal}
                   className="btn-primary text-[11px] py-1.5 px-3"
                 >
@@ -195,7 +221,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     <Zap className="w-3 h-3" />
                     Go Pro
                   </span>
-                </button>
+                </motion.button>
               )}
             </div>
           </div>
@@ -205,16 +231,18 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* Mobile Top Bar */}
       <header className="lg:hidden sticky top-0 z-40 glass no-print" role="banner">
         {userState.tier === 'free' && (
-          <button
+          <motion.button
+            whileTap={{ scale: 0.98 }}
             onClick={onOpenUpgradeModal}
             className="w-full bg-gradient-to-r from-red-950/80 via-zinc-900 to-red-950/80 border-b border-red-500/20 text-white px-3 py-1.5 text-[10px] font-semibold flex items-center justify-center gap-1"
           >
             <Zap className="w-3 h-3 text-red-400" />
             <span>Lifetime Pro <strong className="text-emerald-400 font-mono">{PRICING.PRO_LIFETIME_PRICE_DISPLAY}</strong></span>
-          </button>
+          </motion.button>
         )}
         <div className="flex items-center justify-between h-12 px-4">
-          <button
+          <motion.button
+            whileHover={{ scale: 1.02 }}
             onClick={() => setActiveTab('dashboard')}
             className="flex items-center gap-2"
             aria-label="Go to dashboard"
@@ -225,36 +253,52 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className="text-base font-extrabold tracking-tight text-white font-mono">
               Backend<span className="text-red-500">Forge</span>
             </span>
-          </button>
+          </motion.button>
 
-           <div className="flex items-center gap-2">
-             <button
-               onClick={onOpenCommandPalette}
-               className="w-9 h-9 rounded-xl bg-zinc-800/60 hover:bg-zinc-800 text-zinc-400 border border-zinc-700/50 flex items-center justify-center transition"
-               aria-label="Open search"
-             >
-               <Search className="w-4 h-4" />
-             </button>
+          <div className="flex items-center gap-2">
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={onOpenCommandPalette}
+              className="w-9 h-9 rounded-xl bg-zinc-800/60 hover:bg-zinc-800 text-zinc-400 border border-zinc-700/50 flex items-center justify-center transition"
+              aria-label="Open search"
+            >
+              <Search className="w-4 h-4" />
+            </motion.button>
 
-             {!user && (
-               <button
-                 onClick={onOpenAuthModal}
-                 className="flex items-center gap-1 bg-gradient-to-r from-red-600 via-rose-600 to-indigo-600 hover:from-red-500 hover:to-indigo-500 text-white font-bold px-3 py-1.5 rounded-lg text-[11px] transition shadow-lg shadow-red-600/25 border border-red-500/30"
-               >
-                 <Zap className="w-3.5 h-3.5 fill-white" />
-                 <span className="hidden sm:inline">Sign In</span>
-               </button>
-             )}
+            <AnimatePresence>
+              {!user && (
+                <motion.button
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.8, opacity: 0 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={onOpenAuthModal}
+                  className="flex items-center gap-1 bg-gradient-to-r from-red-600 via-rose-600 to-indigo-600 hover:from-red-500 hover:to-indigo-500 text-white font-bold px-3 py-1.5 rounded-lg text-[11px] transition shadow-lg shadow-red-600/25 border border-red-500/30 sign-in-glow"
+                >
+                  <Zap className="w-3.5 h-3.5 fill-white" />
+                  <span className="hidden sm:inline">Sign In</span>
+                </motion.button>
+              )}
+            </AnimatePresence>
 
-            {user && (
-              <button
-                onClick={() => setShowProfile(true)}
-                className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-xs font-bold text-white"
-                aria-label="Open profile"
-              >
-                {(user.user_metadata?.full_name || user.email || 'U').charAt(0).toUpperCase()}
-              </button>
-            )}
+            <AnimatePresence>
+              {user && (
+                <motion.button
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.8, opacity: 0 }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => setShowProfile(true)}
+                  className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-xs font-bold text-white ring-2 ring-zinc-800"
+                  aria-label="Open profile"
+                >
+                  {(user.user_metadata?.full_name || user.email || 'U').charAt(0).toUpperCase()}
+                </motion.button>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </header>
@@ -266,7 +310,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             const Icon = item.icon;
             const isActive = activeTab === item.id || (item.id === 'more' && isMoreOpen);
             return (
-              <button
+              <motion.button
                 key={item.id}
                 onClick={() => handleMobileNav(item.id)}
                 aria-label={item.label}
@@ -274,41 +318,56 @@ export const Navbar: React.FC<NavbarProps> = ({
                 className={`relative flex flex-col items-center justify-center px-2 py-1.5 rounded-xl transition min-w-[56px] ${
                   isActive ? 'text-red-400' : 'text-zinc-500'
                 }`}
+                whileTap={{ scale: 0.9 }}
               >
                 <Icon className="w-5 h-5" />
                 <span className={`text-[9px] mt-0.5 font-medium ${isActive ? 'text-red-400 font-bold' : ''}`}>
                   {item.label}
                 </span>
                 {isActive && (
-                  <div className="absolute -bottom-0.5 w-4 h-0.5 rounded-full bg-red-500" />
+                  <motion.div
+                    layoutId="mobile-nav-indicator"
+                    className="absolute -bottom-0.5 w-4 h-0.5 rounded-full bg-red-500"
+                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                  />
                 )}
-              </button>
+              </motion.button>
             );
           })}
         </div>
 
         {/* Expanded More Menu */}
-        {showMobileMenu && (
-          <div className="absolute bottom-full left-0 right-0 bg-zinc-900 border-t border-zinc-800 px-4 py-3 animate-slide-down">
-            <div className="grid grid-cols-3 gap-2">
-              {navItems.filter(i => !mobileNavItems.some(m => m.id === i.id)).map(item => {
-                const Icon = item.icon;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => { setShowMobileMenu(false); setActiveTab(item.id); }}
-                    className={`flex flex-col items-center gap-1 p-3 rounded-xl transition ${
-                      activeTab === item.id ? 'bg-red-500/15 text-red-300 border border-red-500/20' : 'bg-zinc-800/60 text-zinc-400 hover:text-zinc-200'
-                    }`}
-                  >
-                    <Icon className="w-4 h-4" />
-                    <span className="text-[10px] font-medium">{item.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        )}
+        <AnimatePresence>
+          {showMobileMenu && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="absolute bottom-full left-0 right-0 bg-zinc-900 border-t border-zinc-800 px-4 py-3 overflow-hidden"
+            >
+              <div className="grid grid-cols-3 gap-2">
+                {navItems.filter(i => !mobileNavItems.some(m => m.id === i.id)).map(item => {
+                  const Icon = item.icon;
+                  const isItemActive = activeTab === item.id;
+                  return (
+                    <motion.button
+                      key={item.id}
+                      onClick={() => { setShowMobileMenu(false); setActiveTab(item.id); }}
+                      className={`flex flex-col items-center gap-1 p-3 rounded-xl transition ${
+                        isItemActive ? 'bg-red-500/15 text-red-300 border border-red-500/20' : 'bg-zinc-800/60 text-zinc-400 hover:text-zinc-200'
+                      }`}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Icon className="w-4 h-4" />
+                      <span className="text-[10px] font-medium">{item.label}</span>
+                    </motion.button>
+                  );
+                })}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
     </>
   );
