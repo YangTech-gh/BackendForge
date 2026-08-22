@@ -620,7 +620,7 @@ Common HTTP status codes:
 | Variable | Function | Description |
 |----------|----------|-------------|
 | SUPABASE_URL | All | Supabase project URL |
-| SUPABASE_ANON_KEY | All | Supabase anon key |
+| SUPABASE_PUBLISHABLE_KEY | All | Supabase publishable key |
 | SUPABASE_SERVICE_ROLE_KEY | All | Service role key (bypasses RLS) |
 | STRIPE_SECRET_KEY | stripe-* | Stripe API key |
 | STRIPE_WEBHOOK_SIGNING_SECRET | stripe-webhook | Webhook signature secret |

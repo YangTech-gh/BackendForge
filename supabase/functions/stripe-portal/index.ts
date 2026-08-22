@@ -17,10 +17,10 @@ import {
 const STRIPE_SECRET_KEY = Deno.env.get("STRIPE_SECRET_KEY");
 const APP_URL = Deno.env.get("APP_URL");
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
-const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY");
+const SUPABASE_PUBLISHABLE_KEY = Deno.env.get("SUPABASE_PUBLISHABLE_KEY");
 
-if (!STRIPE_SECRET_KEY || !APP_URL || !SUPABASE_URL || !SUPABASE_ANON_KEY) {
-  console.error("FATAL: Missing required environment variables. Check STRIPE_SECRET_KEY, APP_URL, SUPABASE_URL, SUPABASE_ANON_KEY");
+if (!STRIPE_SECRET_KEY || !APP_URL || !SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
+  console.error("FATAL: Missing required environment variables. Check STRIPE_SECRET_KEY, APP_URL, SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY");
   throw new Error("Missing required environment variables");
 }
 
@@ -44,7 +44,7 @@ Deno.serve(async (req: Request) => {
       return errorResponse("Missing authorization", 401, req);
     }
 
-    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
       global: { headers: { Authorization: authHeader } },
     });
 

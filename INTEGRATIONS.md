@@ -68,7 +68,7 @@ import { createClient } from '@supabase/supabase-js'
 
 const supabase = createClient(
   'https://<project>.supabase.co',
-  '<anon-key>'
+  '<publishable-key>'
 )
 
 // Sign in with Google
@@ -118,7 +118,7 @@ Edge Functions access these via `supabase.auth.getUser()`.
 ```typescript
 // Client-side (anon key, RLS enforced)
 import { createClient } from '@supabase/supabase-js'
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY)
 
 // Edge Function (service role, bypasses RLS)
 const adminSupabase = createClient(
@@ -295,7 +295,7 @@ import { createClient } from '@supabase/supabase-js'
 
 export const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
+  import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY
 )
 ```
 
@@ -423,7 +423,7 @@ GEMINI_API_KEY=your-gemini-key
 
 ```env
 VITE_SUPABASE_URL=https://<project>.supabase.co
-VITE_SUPABASE_ANON_KEY=<anon-key>
+VITE_SUPABASE_PUBLISHABLE_KEY=<publishable-key>
 ```
 
 ---

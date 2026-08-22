@@ -1,5 +1,5 @@
 -- Backend Forge Seed Data - Labs
--- 33 labs across 16 tracks (modularized)
+-- 46 labs across 22 tracks (modularized)
 -- Run: supabase db reset (auto) or psql -f supabase/seed-labs.sql
 -- This file is a modular loader - individual tracks are in supabase/seed-labs/
 
@@ -19,3 +19,9 @@
 \i supabase/seed-labs/track-14.sql
 \i supabase/seed-labs/track-15.sql
 \i supabase/seed-labs/track-16.sql
+\i supabase/seed-labs/track-17.sql
+\i supabase/seed-labs/track-18.sql
+\i supabase/seed-labs/track-19.sql
+\i supabase/seed-labs/track-20.sql
+\i supabase/seed-labs/track-21.sql
+\i supabase/seed-labs/track-22.sql

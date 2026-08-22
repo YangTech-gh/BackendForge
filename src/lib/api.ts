@@ -1,7 +1,7 @@
 import { isSupabaseConfigured, supabase } from './supabase';
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
 // Request cache (TTL-based, scoped per user)
 const requestCache = new Map<string, { data: unknown; timestamp: number; userId?: string }>();
@@ -62,8 +62,8 @@ export async function invokeEdgeFunction<T = unknown>(
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
   };
-  if (SUPABASE_ANON_KEY) {
-    headers['apikey'] = SUPABASE_ANON_KEY;
+  if (SUPABASE_PUBLISHABLE_KEY) {
+    headers['apikey'] = SUPABASE_PUBLISHABLE_KEY;
   }
   if (session?.access_token) {
     headers['Authorization'] = `Bearer ${session.access_token}`;

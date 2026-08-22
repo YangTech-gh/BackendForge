@@ -64,7 +64,7 @@ Edit `.env.local`:
 
 ```env
 VITE_SUPABASE_URL=http://localhost:54321
-VITE_SUPABASE_ANON_KEY=<your-anon-key>
+VITE_SUPABASE_PUBLISHABLE_KEY=<your-publishable-key>
 ```
 
 ### 3. Start Local Backend
@@ -175,7 +175,7 @@ See [RLS.md](RLS.md) for complete security architecture.
 
 ```env
 VITE_SUPABASE_URL=https://<project>.supabase.co
-VITE_SUPABASE_ANON_KEY=<anon-key>
+VITE_SUPABASE_PUBLISHABLE_KEY=<publishable-key>
 ```
 
 ### Backend (Supabase Secrets)
