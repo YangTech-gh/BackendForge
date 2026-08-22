@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #09090b;
+  }
+  code, kbd, samp, pre {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* Digital Vintage Noise & High-Performance Synth Texture */
+.bg-noise-vintage {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+.synth-grid-overlay {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Liquid Metal Synth Card Styling */
+.liquid-metal-card {
+  background: linear-gradient(135deg, rgba(30, 30, 42, 0.9) 0%, rgba(13, 13, 18, 0.95) 50%, rgba(20, 16, 28, 0.92) 100%);
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  box-shadow: 
+    0 0 50px -10px rgba(139, 92, 246, 0.25),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.8);
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.liquid-metal-card:hover {
+  border-color: rgba(239, 68, 68, 0.6);
+  box-shadow: 
+    0 0 60px -5px rgba(239, 68, 68, 0.35),
+    0 0 30px -5px rgba(168, 85, 247, 0.3),
+    inset 0 1px 2px rgba(255, 255, 255, 0.35);
+}
+
+/* Animated Circular Waves for Synth Hover Effect */
+@keyframes synthWave1 {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+@keyframes synthWave2 {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+@keyframes synthWave3 {
+  0% {
+    transform: scale(0.4);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(3.0);
+    opacity: 0;
+  }
+}
+
+.animate-synth-wave-1 {
+  animation: synthWave1 3s infinite cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animate-synth-wave-2 {
+  animation: synthWave2 3s infinite cubic-bezier(0.16, 1, 0.3, 1);
+  animation-delay: 1s;
+}
+
+.animate-synth-wave-3 {
+  animation: synthWave3 3s infinite cubic-bezier(0.16, 1, 0.3, 1);
+  animation-delay: 2s;
+}
+
+/* Custom subtle scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(9, 9, 11, 0.6);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(39, 39, 42, 0.8);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(63, 63, 70, 1);
+}
+
+/* Custom liquid glass & high-tech texture styles */
+.liquid-glass {
+  background: rgba(18, 18, 22, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.liquid-glass-red {
+  background: linear-gradient(135deg, rgba(28, 14, 18, 0.8) 0%, rgba(18, 18, 22, 0.85) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  box-shadow: 0 20px 50px -10px rgba(220, 38, 38, 0.15), inset 0 1px 0 rgba(248, 113, 113, 0.2);
+}
+
+.liquid-glass-interactive {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.liquid-glass-interactive:hover {
+  border-color: rgba(239, 68, 68, 0.4);
+  box-shadow: 0 25px 60px -12px rgba(239, 68, 68, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.texture-dots {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.glow-red {
+  box-shadow: 0 0 40px -5px rgba(239, 68, 68, 0.35);
+}
+
+.glow-orange {
+  box-shadow: 0 0 30px -5px rgba(245, 158, 11, 0.15);
+}
+
+.glow-emerald {
+  box-shadow: 0 0 30px -5px rgba(16, 185, 129, 0.15);
+}
+
+.glow-indigo {
+  box-shadow: 0 0 35px -5px rgba(99, 102, 241, 0.25);
+}
+
+.glow-purple {
+  box-shadow: 0 0 35px -5px rgba(168, 85, 247, 0.25);
+}

@@ -1,25 +1,41 @@
-import { ArrowRight, CheckCircle2, Code2, LockKeyhole, Network, Terminal, Zap, ShieldCheck, Users } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Cpu, Terminal, Zap, ShieldCheck, ShieldAlert, Sparkles, Layers, Bot, TrendingUp, Award, Radio } from 'lucide-react';
+import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
 import { PRICING } from '../constants/pricing';
 import { SITE_URL } from '../seo-config';
+import { COURSE_TRACKS } from '../data/coursesData';
+import { ARCHITECTURE_TEARDOWNS } from '../data/teardownsData';
 
 interface LandingPageProps {
   onStart: () => void;
+  onOpenUpgradeModal: () => void;
 }
 
-const outcomes = [
-  'Ship a production-grade backend project in every track',
-  'Learn through incident-style labs, not passive videos',
-  'Build judgment for the systems AI cannot own for you',
+const PHILOSOPHY_PILLARS = [
+  {
+    icon: Layers,
+    color: 'text-indigo-400',
+    bg: 'bg-indigo-500/10 border-indigo-500/20',
+    title: 'Multi-Paradigm Mastery',
+    text: 'Rails to validate rapidly, Node/TS for ubiquitous API ecosystems, Go for microservices, and Rust for critical latency bottlenecks.',
+  },
+  {
+    icon: Bot,
+    color: 'text-purple-400',
+    bg: 'bg-purple-500/10 border-purple-500/20',
+    title: 'AI Systems Integration',
+    text: 'Build RAG pipelines with pgvector, integrate LLM function calling safely, write output guardrails, and harness agentic workflows.',
+  },
+  {
+    icon: TrendingUp,
+    color: 'text-emerald-400',
+    bg: 'bg-emerald-500/10 border-emerald-500/20',
+    title: 'Outcome & RFC Leadership',
+    text: 'Write formal RFCs, communicate technical trade-offs to executives, set observability metrics, and align technical debt with growth.',
+  },
 ];
 
-const testimonials = [
-  { name: 'Sarah Chen', role: 'Senior Backend Engineer', quote: 'The incident-style labs are exactly how real debugging works. I shipped a production fix the same week I completed the concurrency track.' },
-  { name: 'Marcus Rivera', role: 'Staff Engineer', quote: 'Finally, a platform that teaches systems thinking instead of just syntax. The data integrity labs saved me from a race condition in our payment pipeline.' },
-  { name: 'Priya Patel', role: 'Platform Engineer', quote: 'I went from copy-pasting configs to actually understanding why our distributed systems fail. The verification approach is a game-changer.' },
-];
-
-export function LandingPage({ onStart }: LandingPageProps) {
+export function LandingPage({ onStart, onOpenUpgradeModal }: LandingPageProps) {
   return (
     <main id="main-content" className="relative z-10 mx-auto flex min-h-screen w-full max-w-7xl flex-col px-5 py-6 sm:px-8 lg:px-10">
       <Helmet>
@@ -33,7 +49,7 @@ export function LandingPage({ onStart }: LandingPageProps) {
         <meta property="og:type" content="website" />
       </Helmet>
 
-      {/* Hidden SEO content block - crawlable by search engines */}
+      {/* Hidden SEO content block */}
       <div className="seo-hidden" aria-hidden="true">
         <h2>Backend Forge: Interactive Backend Engineering Platform</h2>
         <p>
@@ -51,131 +67,375 @@ export function LandingPage({ onStart }: LandingPageProps) {
         </p>
       </div>
 
-      {/* FAQ structured data for Google featured snippets */}
+      {/* FAQ structured data */}
       <script type="application/ld+json">
-      {JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        mainEntity: [
-          {
-            "@type": "Question",
-            name: "What is Backend Forge?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "Backend Forge is an interactive backend engineering platform that turns real production work - concurrency, failure modes, data integrity, and architecture - into guided, verifiable labs with AI mentorship and verified certificates."
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: [
+            {
+              "@type": "Question",
+              name: "What is Backend Forge?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "Backend Forge is an interactive backend engineering platform that turns real production work - concurrency, failure modes, data integrity, and architecture - into guided, verifiable labs with AI mentorship and verified certificates."
+              }
+            },
+            {
+              "@type": "Question",
+              name: "How much does Backend Forge cost?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "Backend Forge offers a one-time lifetime Pro pass for $199 (originally $599). This includes all current and future tracks, AI code reviews, verified certificates, and 1-on-1 architecture coaching calls. No monthly subscriptions."
+              }
+            },
+            {
+              "@type": "Question",
+              name: "What backend technologies does Backend Forge teach?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "Backend Forge covers TypeScript, Node.js, Go, Rust, Ruby on Rails, PostgreSQL, Redis, distributed systems, event sourcing, saga patterns, and AI-native backend integration with pgvector and LLM function calling."
+              }
+            },
+            {
+              "@type": "Question",
+              name: "Are the labs really interactive?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "Yes. Every lab is a hands-on coding environment with a real code editor, terminal, test verification suite, and AI mentor. You write production-grade code, not watch videos. Labs include incident-style scenarios, race condition debugging, and distributed system failures."
+              }
             }
-          },
-          {
-            "@type": "Question",
-            name: "How much does Backend Forge cost?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "Backend Forge offers a one-time lifetime Pro pass for $199 (originally $599). This includes all current and future tracks, AI code reviews, verified certificates, and 1-on-1 architecture coaching calls. No monthly subscriptions."
-            }
-          },
-          {
-            "@type": "Question",
-            name: "What backend technologies does Backend Forge teach?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "Backend Forge covers TypeScript, Node.js, Go, Rust, Ruby on Rails, PostgreSQL, Redis, distributed systems, event sourcing, saga patterns, and AI-native backend integration with pgvector and LLM function calling."
-            }
-          },
-          {
-            "@type": "Question",
-            name: "Are the labs really interactive?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "Yes. Every lab is a hands-on coding environment with a real code editor, terminal, test verification suite, and AI mentor. You write production-grade code, not watch videos. Labs include incident-style scenarios, race condition debugging, and distributed system failures."
-            }
-          }
-        ]
-      })}
+          ]
+        })}
       </script>
-      <header className="flex items-center justify-between py-3">
-        <div className="flex items-center gap-2.5 font-mono text-lg font-extrabold tracking-tight text-white">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-red-500/30 bg-red-500/10 text-red-400"><Network className="h-4 w-4" aria-hidden="true" /></span>
-          Backend<span className="text-red-400">Forge</span>
-        </div>
-        <button onClick={onStart} className="btn-secondary px-4 py-2">Sign in</button>
-      </header>
 
-      <section className="grid flex-1 items-center gap-12 py-14 lg:grid-cols-[1.08fr_.92fr] lg:py-20">
-        <div className="max-w-2xl animate-fade-in-up">
-          <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1.5 font-mono text-xs font-semibold text-emerald-300">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden="true" /> Practice-first backend engineering
-          </p>
-          <h1 className="text-4xl font-black leading-[1.05] tracking-tight text-white sm:text-6xl">
-            Build the judgment behind <span className="text-gradient">reliable systems.</span>
-          </h1>
-          <p className="mt-6 max-w-xl text-base leading-7 text-zinc-400 sm:text-lg">
-            Backend Forge turns the difficult parts of real production work—concurrency, failure modes, data integrity, and architecture—into guided, verifiable labs.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <button onClick={onStart} className="btn-primary flex items-center gap-2 px-6 py-3.5 text-sm">Start learning free <ArrowRight className="h-4 w-4" aria-hidden="true" /></button>
-            <a href="#how-it-works" className="btn-secondary px-6 py-3.5 text-sm">See how it works</a>
+      {/* ── HERO BENTO GRID ─────────────────────────────────────────────── */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch pt-6">
+
+        {/* Main Hero Card */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+          className="lg:col-span-8 liquid-metal-card rounded-3xl p-8 sm:p-10 relative overflow-hidden flex flex-col justify-between shadow-2xl group border border-zinc-800 hover:border-red-500/40 min-h-[440px]"
+        >
+          <div className="absolute top-0 right-0 w-96 h-96 bg-red-600/15 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20 group-hover:bg-red-600/25 transition duration-700" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-indigo-600/15 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
+          <div className="absolute inset-0 synth-grid-overlay opacity-25 pointer-events-none" />
+
+          <div className="space-y-6 relative z-10 max-w-2xl">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/25 text-red-400 px-3 py-1 rounded-full text-xs font-bold font-mono">
+                <span className="relative flex h-2 w-2" aria-hidden="true">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
+                </span>
+                SYSTEM INCIDENT FORGE
+              </span>
+              <span className="inline-flex items-center gap-1.5 bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 px-3 py-1 rounded-full text-xs font-semibold">
+                <Sparkles className="w-3 h-3 text-indigo-400" aria-hidden="true" />
+                AI-Native Systems & Verified Diploma
+              </span>
+            </div>
+
+            <h1 className="text-3xl sm:text-5xl font-black leading-[1.1] tracking-tight text-white">
+              From API Builder to <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-rose-300 via-purple-300 to-indigo-300">
+                Systems Architect
+              </span>
+            </h1>
+
+            <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
+              Master high-concurrency systems, race condition locks, PostgreSQL transaction isolation, and distributed fault tolerance — the core engineering AI cannot automate.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => onStart()}
+                className="flex items-center space-x-2 bg-gradient-to-r from-red-600 via-rose-600 to-indigo-600 hover:from-red-500 hover:to-indigo-500 text-white font-bold px-6 py-3.5 rounded-2xl transition text-sm shadow-xl shadow-red-950/40 border border-red-500/30"
+              >
+                <span>Start Learning Free</span>
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              </motion.button>
+
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => onStart()}
+                className="flex items-center space-x-2 bg-zinc-900 hover:bg-zinc-800 text-zinc-100 border border-zinc-700 font-semibold px-5 py-3.5 rounded-2xl transition text-sm font-mono shadow-md"
+              >
+                <Terminal className="w-4 h-4 text-emerald-400" aria-hidden="true" />
+                <span>Interactive Lab</span>
+              </motion.button>
+
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => onStart()}
+                className="flex items-center space-x-2 bg-zinc-950 hover:bg-zinc-900 text-red-300 border border-red-500/30 font-semibold px-5 py-3.5 rounded-2xl transition text-sm font-mono shadow-md"
+              >
+                <Cpu className="w-4 h-4 text-red-400" aria-hidden="true" />
+                <span>System Designer</span>
+              </motion.button>
+            </div>
           </div>
-          <ul className="mt-8 grid gap-3 text-sm text-zinc-300 sm:grid-cols-2">
-            {outcomes.map((outcome) => <li key={outcome} className="flex items-start gap-2"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" aria-hidden="true" />{outcome}</li>)}
-          </ul>
-        </div>
 
-        <div className="card-elevated relative overflow-hidden p-5 sm:p-7" aria-label="Example interactive lab">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_90%_0%,rgba(239,68,68,.16),transparent_42%)]" />
-          <div className="relative">
-            <div className="flex items-center justify-between border-b border-zinc-800 pb-4 font-mono text-xs"><span className="text-zinc-400">LAB 02 / DATA INTEGRITY</span><span className="rounded-full bg-amber-400/10 px-2 py-1 text-amber-300">25 min</span></div>
-            <h2 className="mt-6 text-2xl font-bold text-white">Stop duplicate checkout events</h2>
-            <p className="mt-2 text-sm leading-6 text-zinc-400">Design an idempotent API path that remains correct under retries and concurrent requests.</p>
-            <div className="code-block mt-6"><div className="code-block-header text-zinc-500"><span>checkout.ts</span><span className="text-emerald-400">● tests ready</span></div><pre><code><span className="text-purple-300">await</span> db.transaction(<span className="text-sky-300">async</span> (tx) =&gt; {'{'}{`\n`}  <span className="text-zinc-500">// reserve exactly one payment intent</span>{`\n`}  <span className="text-purple-300">return</span> tx.payment.upsert(...) {`\n`}{'}'});</code></pre></div>
-            <div className="mt-5 grid grid-cols-3 gap-2 text-center text-xs"><div className="rounded-lg bg-zinc-800/70 p-2 text-zinc-400">Brief</div><div className="rounded-lg border border-red-400/25 bg-red-400/10 p-2 font-semibold text-red-200">Build</div><div className="rounded-lg bg-zinc-800/70 p-2 text-zinc-400">Verify</div></div>
-          </div>
-        </div>
-      </section>
-
-      <section id="how-it-works" className="grid gap-4 border-t border-zinc-800/70 py-10 sm:grid-cols-3">
-        {[{ icon: Terminal, title: 'Understand the incident', text: 'Start with a concrete production failure and the constraints that make it hard.' }, { icon: Code2, title: 'Build the solution', text: 'Write or refine working code with focused feedback and useful scaffolding.' }, { icon: LockKeyhole, title: 'Verify the behavior', text: 'Prove the system holds up with tests and architecture-level checks.' }].map(({ icon: Icon, title, text }) => <article key={title} className="card-surface p-5"><Icon className="h-5 w-5 text-red-400" aria-hidden="true" /><h2 className="mt-4 font-bold text-white">{title}</h2><p className="mt-2 text-sm leading-6 text-zinc-400">{text}</p></article>)}
-      </section>
-
-      <section id="social-proof" className="border-t border-zinc-800/70 py-14">
-        <div className="text-center">
-          <p className="mb-2 font-mono text-xs font-semibold uppercase tracking-widest text-zinc-500">Social Proof</p>
-          <h2 className="text-3xl font-bold text-white">Trusted by backend engineers</h2>
-          <p className="mx-auto mt-3 max-w-xl text-zinc-400">Hear from engineers who sharpened their craft on Backend Forge.</p>
-        </div>
-        <div className="mt-10 grid gap-6 sm:grid-cols-3">
-          {testimonials.map(({ name, role, quote }) => (
-            <article key={name} className="card-surface flex flex-col p-6">
-              <p className="flex-1 text-sm leading-6 text-zinc-300">"{quote}"</p>
-              <div className="mt-5 flex items-center gap-3 border-t border-zinc-800/70 pt-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-500/10 font-mono text-sm font-bold text-red-400" aria-hidden="true">{name.split(' ').map(n => n[0]).join('')}</div>
-                <div>
-                  <p className="text-sm font-semibold text-white">{name}</p>
-                  <p className="text-xs text-zinc-500">{role}</p>
-                </div>
+          {/* Hero Stats */}
+          <div className="pt-8 mt-6 border-t border-zinc-800/80 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-mono text-zinc-400 relative z-10">
+            <div className="space-y-0.5">
+              <div className="text-base font-bold text-white">{COURSE_TRACKS.length} Full Tracks</div>
+              <div className="text-zinc-500 text-[11px]">Node, Rails, Go, Rust, AI</div>
+            </div>
+            <div className="space-y-0.5">
+              <div className="text-base font-bold text-red-400 font-sans flex items-center space-x-1">
+                <ShieldAlert className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>Sub-5ms Latency</span>
               </div>
-            </article>
+              <div className="text-zinc-500 text-[11px]">Production Chaos Hardened</div>
+            </div>
+            <div className="space-y-0.5">
+              <div className="text-base font-bold text-white">{PRICING.PRO_LIFETIME_PRICE_DISPLAY} Lifetime</div>
+              <div className="text-zinc-500 text-[11px]">No Monthly Subscriptions</div>
+            </div>
+            <div className="space-y-0.5">
+              <div className="text-base font-bold text-emerald-400 font-sans flex items-center space-x-1">
+                <ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>Verified Diploma</span>
+              </div>
+              <div className="text-zinc-500 text-[11px]">Shareable Credential ID</div>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* Pricing Card */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
+          className="lg:col-span-4 liquid-metal-card rounded-3xl p-8 flex flex-col justify-between shadow-2xl border border-indigo-500/40 text-white min-h-[440px] relative overflow-hidden group"
+        >
+          <div className="absolute inset-0 synth-grid-overlay opacity-30 pointer-events-none" />
+          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-red-500/25 via-purple-500/15 to-transparent pointer-events-none" />
+
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+            <div className="absolute w-48 h-48 rounded-full border border-purple-500/40 animate-synth-wave-1" />
+            <div className="absolute w-64 h-64 rounded-full border border-rose-500/35 animate-synth-wave-2" />
+            <div className="absolute w-80 h-80 rounded-full border border-indigo-400/30 animate-synth-wave-3" />
+            <div className="absolute inset-0 bg-gradient-to-t from-red-950/20 via-transparent to-purple-950/20 mix-blend-screen" />
+          </div>
+
+          <div className="relative z-10">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-500/20 text-red-200 border border-red-400/40 text-[10px] font-mono font-bold uppercase tracking-wider mb-4 shadow-sm">
+              <Zap className="w-3 h-3 fill-red-300 text-red-300" />
+              <span>RECOMMENDED LIFETIME PASS</span>
+            </div>
+
+            <h2 className="text-2xl font-black mb-1.5 tracking-tight">Lifetime Pro Access</h2>
+            <p className="text-zinc-300 text-xs mb-6 font-mono leading-relaxed">
+              One-time payment. Unlock all tracks & official verified certificate.
+            </p>
+
+            <ul className="space-y-3 mb-6">
+              <li className="flex items-center gap-2 text-xs text-white font-medium">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" aria-hidden="true" />
+                <span>Unlock all Enterprise Curriculum Tracks</span>
+              </li>
+              <li className="flex items-center gap-2 text-xs text-white font-medium">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" aria-hidden="true" />
+                <span>Unlimited Forger 1.0 AI Code Reviews</span>
+              </li>
+              <li className="flex items-center gap-2 text-xs text-white font-medium">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" aria-hidden="true" />
+                <span>Official Verified Certificate of Mastery</span>
+              </li>
+              <li className="flex items-center gap-2 text-xs text-white font-medium">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" aria-hidden="true" />
+                <span>1-on-1 Architecture Review Call</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="relative z-10">
+            <div className="flex items-baseline gap-2 mb-4">
+              <span className="text-4xl font-black text-white font-mono tracking-tight">{PRICING.PRO_LIFETIME_PRICE_DISPLAY}</span>
+              <span className="text-zinc-400 line-through text-sm font-mono">{PRICING.PRO_ORIGINAL_PRICE_DISPLAY}</span>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-red-500/30 text-red-200 font-bold border border-red-400/40 ml-auto">
+                SAVE 66%
+              </span>
+            </div>
+
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={onOpenUpgradeModal}
+              className="w-full bg-gradient-to-r from-red-600 via-purple-600 to-indigo-600 hover:from-red-500 hover:to-indigo-500 text-white py-3.5 rounded-2xl font-extrabold text-sm transition shadow-xl font-mono border border-red-400/40"
+            >
+              Join the Forge ({PRICING.PRO_LIFETIME_PRICE_DISPLAY})
+            </motion.button>
+
+            <p className="text-center text-[10px] text-zinc-400 mt-3 uppercase tracking-widest font-mono">
+              One-time payment &bull; Lifetime access
+            </p>
+          </div>
+        </motion.section>
+      </div>
+
+      {/* ── SYSTEM DESIGNER TEASER ─────────────────────────────────────── */}
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' }}
+        className="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-lg relative overflow-hidden mt-4"
+      >
+        <div className="flex items-start justify-between">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400">
+              <Cpu className="w-5 h-5" aria-hidden="true" />
+            </div>
+            <div>
+              <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider font-mono block">
+                INTERACTIVE TOPOLOGY
+              </span>
+              <h3 className="text-base font-bold text-white">System Architecture Sandbox</h3>
+            </div>
+          </div>
+          <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-red-500/10 text-red-400 border border-red-500/20 font-bold flex items-center space-x-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping" aria-hidden="true" />
+            <span>CHAOS TESTER</span>
+          </span>
+        </div>
+
+        <p className="text-xs text-zinc-400 my-4 leading-relaxed">
+          Simulate 75,000 RPS traffic spikes, detect connection pool exhaustion, analyze single points of failure (SPOFs), and generate formal technical RFCs.
+        </p>
+
+        <div className="flex items-center justify-between pt-3 border-t border-zinc-800/80">
+          <span className="text-xs text-zinc-500 font-mono">Simulate SPOFs &amp; Traffic Spikes</span>
+          <button onClick={onStart} className="flex items-center space-x-1.5 bg-zinc-800 hover:bg-zinc-700 text-red-300 font-bold px-4 py-2 rounded-full text-xs transition font-mono border border-red-500/30">
+            <span>Launch Sandbox</span>
+            <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+          </button>
+        </div>
+      </motion.div>
+
+      {/* ── PHILOSOPHY PILLARS ─────────────────────────────────────────── */}
+      <section className="mt-8 space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xs font-mono uppercase tracking-widest text-zinc-500 font-bold">
+            ARCHITECTURAL PHILOSOPHY
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {PHILOSOPHY_PILLARS.map(({ icon: Icon, color, bg, title, text }) => (
+            <div key={title} className="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 space-y-3">
+              <div className={`p-2.5 bg-zinc-800 rounded-2xl ${color} w-fit`}>
+                <Icon className="w-5 h-5" aria-hidden="true" />
+              </div>
+              <h3 className="text-base font-bold text-white">{title}</h3>
+              <p className="text-xs text-zinc-400 leading-relaxed">{text}</p>
+            </div>
           ))}
         </div>
       </section>
 
-      <section id="pricing-cta" className="border-t border-zinc-800/70 py-14">
-        <div className="card-glow relative mx-auto max-w-2xl overflow-hidden rounded-2xl border border-zinc-800/70 p-8 text-center sm:p-10">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(239,68,68,.12),transparent_60%)]" />
-          <div className="relative">
-            <p className="mb-2 font-mono text-xs font-semibold uppercase tracking-widest text-zinc-500">Start building today</p>
-            <h2 className="text-3xl font-bold text-white">Get Backend Forge for <span className="text-red-400">{PRICING.PRO_LIFETIME_PRICE_DISPLAY}</span></h2>
-            <p className="mx-auto mt-3 max-w-md text-sm text-zinc-400">One-time payment. Lifetime access to all current and future labs.</p>
-            <div className="mt-4 flex items-center justify-center gap-3">
-              <span className="text-2xl font-bold text-red-400">{PRICING.PRO_LIFETIME_PRICE_DISPLAY}</span>
-              <span className="text-lg text-zinc-500 line-through">{PRICING.PRO_ORIGINAL_PRICE_DISPLAY}</span>
-            </div>
-            <p className="mt-1 text-xs text-zinc-500">{PRICING.ENROLLMENT_COUNT} engineers enrolled</p>
-            <button onClick={onStart} className="btn-primary mx-auto mt-6 flex items-center gap-2 px-8 py-3.5 text-sm">Get Started Free <ArrowRight className="h-4 w-4" aria-hidden="true" /></button>
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-xs text-zinc-500">
-              <span className="flex items-center gap-1.5"><ShieldCheck className="h-4 w-4 text-emerald-400" aria-hidden="true" /> 30-day money-back guarantee</span>
-              <span className="flex items-center gap-1.5"><Zap className="h-4 w-4 text-amber-400" aria-hidden="true" /> Instant access</span>
-            </div>
+      {/* ── CURRICULUM TRACKS PREVIEW ──────────────────────────────────── */}
+      <section className="mt-8 space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold text-white">Enterprise Curriculum Tracks</h2>
+            <p className="text-xs text-zinc-400 mt-1">Modular, project-based learning paths for backend engineers.</p>
           </div>
+          <button onClick={onStart} className="text-indigo-400 hover:text-indigo-300 text-xs font-mono font-semibold flex items-center space-x-1">
+            <span>View All Tracks</span>
+            <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {COURSE_TRACKS.slice(0, 6).map((track) => (
+            <div
+              key={track.id}
+              onClick={() => onStart()}
+              className="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 flex flex-col justify-between hover:border-zinc-700 transition group space-y-4 shadow-lg cursor-pointer"
+            >
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className={`text-[10px] font-mono px-2.5 py-0.5 rounded-full border ${track.badgeColor}`}>
+                    TRACK {track.trackNumber}: {track.paradigm}
+                  </span>
+                  <span className="text-[11px] font-mono text-zinc-500">{track.labs.length} Labs</span>
+                </div>
+
+                <h3 className="text-lg font-bold text-white group-hover:text-indigo-400 transition">
+                  {track.title}
+                </h3>
+
+                <p className="text-xs text-zinc-400 line-clamp-3 leading-relaxed">
+                  {track.description}
+                </p>
+
+                <div className="p-3 rounded-2xl bg-zinc-950/70 border border-zinc-800 text-xs space-y-1">
+                  <div className="text-[10px] font-mono uppercase text-indigo-400 font-semibold">Shippable Deliverable:</div>
+                  <div className="font-bold text-zinc-200">{track.deliverableProject.title}</div>
+                </div>
+              </div>
+
+              <div className="pt-2 border-t border-zinc-800/80 flex items-center justify-between">
+                <div className="flex flex-wrap gap-1">
+                  {track.deliverableProject.techStack.slice(0, 3).map((tech, i) => (
+                    <span key={i} className="text-[9px] font-mono bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-full">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                <span className="text-xs font-bold text-indigo-400 flex items-center space-x-1">
+                  <span>Explore</span>
+                  <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── ARCHITECTURE TEARDOWNS PREVIEW ─────────────────────────────── */}
+      <section className="mt-8 bg-zinc-900/80 border border-zinc-800 rounded-3xl p-6 sm:p-8 space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="text-xs font-mono text-indigo-400 uppercase tracking-wider mb-1">HIGH-SIGNAL CONTENT MARKETING</div>
+            <h2 className="text-2xl font-bold text-white">Architecture Teardowns</h2>
+            <p className="text-xs text-zinc-400 mt-1">Deep-dive technical post-mortems analyzing how companies scale.</p>
+          </div>
+          <button onClick={onStart} className="text-indigo-400 hover:text-indigo-300 text-xs font-mono font-semibold flex items-center space-x-1">
+            <span>Read All Teardowns</span>
+            <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {ARCHITECTURE_TEARDOWNS.slice(0, 3).map((item) => (
+            <div
+              key={item.id}
+              onClick={() => onStart()}
+              className="bg-zinc-950/80 border border-zinc-800 hover:border-zinc-700 rounded-2xl p-5 space-y-3 cursor-pointer transition group"
+            >
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold font-mono text-indigo-300 px-2.5 py-0.5 rounded-full bg-indigo-500/10 border border-indigo-500/20">
+                  {item.company}
+                </span>
+                <span className="text-[10px] text-zinc-500 font-mono">{item.readTime}</span>
+              </div>
+              <h3 className="text-sm font-bold text-white group-hover:text-indigo-400 transition line-clamp-2">
+                {item.title}
+              </h3>
+              <p className="text-xs text-zinc-400 line-clamp-2 leading-relaxed">
+                {item.summary}
+              </p>
+            </div>
+          ))}
         </div>
       </section>
     </main>

@@ -1,0 +1,6 @@
+{
+  "name": "Backend Forge",
+  "description": "From API Builders to AI-Native Systems Architects. Hands-on backend architecture, distributed systems, and AI engineering platform.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

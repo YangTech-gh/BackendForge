@@ -217,10 +217,15 @@ function AppContent() {
         </Helmet>
         <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col font-sans relative overflow-hidden">
           <div className="fixed inset-0 synth-grid-overlay opacity-20 pointer-events-none z-0" />
-          <Suspense fallback={<ViewLoader />}><LandingPage onStart={() => setIsAuthModalOpen(true)} /></Suspense>
+          <Suspense fallback={<ViewLoader />}>
+            <LandingPage onStart={() => setIsAuthModalOpen(true)} onOpenUpgradeModal={() => setIsUpgradeModalOpen(true)} />
+          </Suspense>
         </div>
         <Suspense fallback={null}>
           <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
+        </Suspense>
+        <Suspense fallback={null}>
+          <PricingUpgradeModal isOpen={isUpgradeModalOpen} onClose={() => setIsUpgradeModalOpen(false)} onUpgradeSuccess={handleUpgradeProSuccess} />
         </Suspense>
       </>
     );
