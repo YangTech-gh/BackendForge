@@ -17,5 +17,12 @@ if (!isSupabaseConfigured) {
 // in preview deployments where credentials have intentionally not been added.
 export const supabase = createClient(
   supabaseUrl || 'https://placeholder.supabase.co',
-  supabasePublishableKey || 'public-key-not-configured'
+  supabasePublishableKey || 'public-key-not-configured',
+  {
+    auth: {
+      detectSessionInUrl: true,
+      persistSession: true,
+      autoRefreshToken: true,
+    },
+  }
 );

@@ -86,6 +86,21 @@ function AppContent() {
     coachingCallsRemaining: 0, savedStarterKits: [],
   });
 
+  const GlobalBackground = () => (
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
+      <div className="absolute inset-0 bg-noise-vintage" />
+      <div className="absolute inset-0 synth-grid-overlay opacity-40" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-red-600/10 rounded-full blur-3xl geo-pulse" />
+      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-indigo-600/10 rounded-full blur-3xl geo-pulse" style={{ animationDelay: '2s' }} />
+      <div className="absolute top-1/3 right-0 w-64 h-64 border border-red-500/10 rounded-full geo-float-1" />
+      <div className="absolute bottom-1/4 left-0 w-48 h-48 border border-indigo-500/10 rounded-full geo-float-2" />
+      <div className="absolute top-2/3 left-1/3 w-32 h-32 border border-purple-500/10 rotate-45 geo-float-3" />
+      <div className="absolute top-20 right-1/3 w-2 h-2 bg-red-500/30 rounded-full geo-float-1" />
+      <div className="absolute bottom-32 left-1/2 w-1.5 h-1.5 bg-indigo-500/30 rounded-full geo-float-2" />
+      <div className="absolute top-1/2 left-20 w-1 h-1 bg-purple-400/30 rounded-full geo-float-3" />
+    </div>
+  );
+
   useEffect(() => {
     const { tab, id } = parseHashRoute();
     setActiveTab(tab);
@@ -216,7 +231,7 @@ function AppContent() {
           <meta property="og:type" content="website" />
         </Helmet>
         <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col font-sans relative overflow-hidden">
-          <div className="fixed inset-0 synth-grid-overlay opacity-20 pointer-events-none z-0" />
+          <GlobalBackground />
           <Suspense fallback={<ViewLoader />}>
             <LandingPage onStart={() => setIsAuthModalOpen(true)} onOpenUpgradeModal={() => setIsUpgradeModalOpen(true)} />
           </Suspense>
@@ -259,7 +274,7 @@ function AppContent() {
 
       <a href="#main-content" className="skip-link">Skip to main content</a>
       <OfflineBanner />
-      <div className="fixed inset-0 synth-grid-overlay opacity-20 pointer-events-none z-0" />
+      <GlobalBackground />
       <div className="relative z-10 flex flex-col min-h-screen">
         <Suspense fallback={null}>
           <Navbar activeTab={activeTab} setActiveTab={handleNavigateTab} userState={userState} courses={courses} onOpenCommandPalette={() => setIsCommandPaletteOpen(true)} onOpenUpgradeModal={() => setIsUpgradeModalOpen(true)} onOpenAuthModal={() => setIsAuthModalOpen(true)} />
